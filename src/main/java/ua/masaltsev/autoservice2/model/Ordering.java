@@ -1,19 +1,18 @@
 package ua.masaltsev.autoservice2.model;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.List;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 import ua.masaltsev.autoservice2.model.status.OrderingStatus;
@@ -24,6 +23,7 @@ import ua.masaltsev.autoservice2.model.status.OrderingStatus;
 @Setter
 public class Ordering {
     @Id
+    @Column(name = "id", nullable = false)
     private Long id;
     @OneToOne(fetch = FetchType.LAZY)
     @MapsId
@@ -36,7 +36,6 @@ public class Ordering {
     @OneToMany(mappedBy = "ordering")
     private List<Favor> favors;
     @OneToMany
-    @JoinColumn(name = "product_id")
     private List<Product> products;
     @Enumerated(EnumType.STRING)
     private OrderingStatus status;
