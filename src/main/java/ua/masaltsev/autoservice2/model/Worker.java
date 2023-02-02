@@ -25,6 +25,6 @@ public class Worker {
     private Long id;
     private String name;
     @OneToMany
-    @JoinColumn(name = "ordering_id")
+    @JoinColumn(name = "worker_id")
     private List<Ordering> orderings;
 }
