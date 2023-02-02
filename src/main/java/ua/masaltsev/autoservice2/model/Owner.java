@@ -22,6 +22,7 @@ public class Owner {
     @SequenceGenerator(name = "owner_generator", sequenceName = "owner_seq", allocationSize = 1)
     @Column(name = "id", nullable = false)
     private Long id;
+    private String name;
     @OneToMany(mappedBy = "owner")
     private List<Car> cars;
     @OneToMany
