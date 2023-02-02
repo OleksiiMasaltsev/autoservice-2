@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
@@ -22,8 +23,10 @@ public class Owner {
     @SequenceGenerator(name = "owner_generator", sequenceName = "owner_seq", allocationSize = 1)
     @Column(name = "id", nullable = false)
     private Long id;
+    private String name;
     @OneToMany(mappedBy = "owner")
     private List<Car> cars;
     @OneToMany
+    @JoinColumn(name = "owner_id")
     private List<Ordering> orderings;
 }
