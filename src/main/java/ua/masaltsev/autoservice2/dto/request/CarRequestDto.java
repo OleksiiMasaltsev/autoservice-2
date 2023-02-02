@@ -1,5 +1,8 @@
-package ua.masaltsev.autoservice2.dto;
+package ua.masaltsev.autoservice2.dto.request;
 
+import lombok.Data;
+
+@Data
 public class CarRequestDto {
     private String brand;
     private String model;
