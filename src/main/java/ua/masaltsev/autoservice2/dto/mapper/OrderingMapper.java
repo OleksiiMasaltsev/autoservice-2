@@ -1,5 +1,6 @@
 package ua.masaltsev.autoservice2.dto.mapper;
 
+import org.springframework.stereotype.Component;
 import ua.masaltsev.autoservice2.dto.request.OrderingRequestDto;
 import ua.masaltsev.autoservice2.dto.response.OrderingResponseDto;
 import ua.masaltsev.autoservice2.model.Favor;
@@ -11,6 +12,7 @@ import ua.masaltsev.autoservice2.service.FavorService;
 import ua.masaltsev.autoservice2.service.ProductService;
 import java.util.stream.Collectors;
 
+@Component
 public class OrderingMapper implements RequestDtoMapper<OrderingRequestDto, Ordering>,
         ResponseDtoMapper<OrderingResponseDto, Ordering> {
     private final CarService carService;
