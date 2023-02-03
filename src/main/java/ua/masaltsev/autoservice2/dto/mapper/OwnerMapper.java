@@ -1,5 +1,6 @@
 package ua.masaltsev.autoservice2.dto.mapper;
 
+import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
 import ua.masaltsev.autoservice2.dto.request.OwnerRequestDto;
 import ua.masaltsev.autoservice2.dto.response.OwnerResponseDto;
@@ -8,7 +9,6 @@ import ua.masaltsev.autoservice2.model.Ordering;
 import ua.masaltsev.autoservice2.model.Owner;
 import ua.masaltsev.autoservice2.service.CarService;
 import ua.masaltsev.autoservice2.service.OrderingService;
-import java.util.stream.Collectors;
 
 @Component
 public class OwnerMapper implements RequestDtoMapper<OwnerRequestDto, Owner>,

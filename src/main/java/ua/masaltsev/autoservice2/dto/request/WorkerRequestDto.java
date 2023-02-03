@@ -1,7 +1,7 @@
 package ua.masaltsev.autoservice2.dto.request;
 
-import lombok.Data;
 import java.util.List;
+import lombok.Data;
 
 @Data
 public class WorkerRequestDto {

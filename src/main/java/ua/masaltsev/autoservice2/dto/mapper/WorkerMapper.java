@@ -1,12 +1,12 @@
 package ua.masaltsev.autoservice2.dto.mapper;
 
+import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
 import ua.masaltsev.autoservice2.dto.request.WorkerRequestDto;
 import ua.masaltsev.autoservice2.dto.response.WorkerResponseDto;
 import ua.masaltsev.autoservice2.model.Ordering;
 import ua.masaltsev.autoservice2.model.Worker;
 import ua.masaltsev.autoservice2.service.OrderingService;
-import java.util.stream.Collectors;
 
 @Component
 public class WorkerMapper implements RequestDtoMapper<WorkerRequestDto, Worker>,

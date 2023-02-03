@@ -1,7 +1,7 @@
 package ua.masaltsev.autoservice2.dto.response;
 
-import lombok.Data;
 import java.util.List;
+import lombok.Data;
 
 @Data
 public class OwnerResponseDto {

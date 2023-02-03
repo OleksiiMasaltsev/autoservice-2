@@ -1,7 +1,7 @@
 package ua.masaltsev.autoservice2.dto.response;
 
-import lombok.Data;
 import java.math.BigDecimal;
+import lombok.Data;
 
 @Data
 public class ProductResponseDto {
