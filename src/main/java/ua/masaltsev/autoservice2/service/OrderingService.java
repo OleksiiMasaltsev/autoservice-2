@@ -8,4 +8,6 @@ public interface OrderingService {
     Ordering getById(Long id);
 
     void delete(Long id);
+
+    Ordering calculatePrice(Long id);
 }

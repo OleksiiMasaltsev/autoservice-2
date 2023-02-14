@@ -1,5 +1,6 @@
 package ua.masaltsev.autoservice2.controller;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -13,6 +14,7 @@ import ua.masaltsev.autoservice2.dto.request.OrderingRequestDto;
 import ua.masaltsev.autoservice2.dto.response.OrderingResponseDto;
 import ua.masaltsev.autoservice2.model.Ordering;
 import ua.masaltsev.autoservice2.model.Product;
+import ua.masaltsev.autoservice2.model.status.OrderingStatus;
 import ua.masaltsev.autoservice2.service.OrderingService;
 import ua.masaltsev.autoservice2.service.ProductService;
 
@@ -55,5 +57,18 @@ public class OrderingController {
         Ordering ordering = orderingMapper.mapToModel(requestDto);
         ordering.setId(id);
         return orderingMapper.mapToDto(orderingService.save(ordering));
+    }
+
+    @PutMapping
+    public OrderingResponseDto updateOrderingStatus(@RequestParam String status,
+                                                    @RequestParam Long id) {
+        Ordering ordering = orderingService.getById(id);
+        ordering.setStatus(OrderingStatus.valueOf(status.toUpperCase()));
+        return orderingMapper.mapToDto(orderingService.save(ordering));
+    }
+
+    @GetMapping("/{id}")
+    public OrderingResponseDto calculatePrice(@PathVariable Long id) {
+        return orderingMapper.mapToDto(orderingService.calculatePrice(id));
     }
 }
