@@ -151,56 +151,50 @@ public class BootstrapController {
         favorService.save(favor1);
         favorService.save(favor2);
 
-        return "Done!";
+        return "Done!" + linkOne();
     }
 
-    @GetMapping("/link-one")
     public String linkOne() {
         Car car1 = carService.getById(1L);
         Owner owner1 = ownerService.getById(1L);
         car1.setOwner(owner1);
-        carService.save(car1);
 
         Car car2 = carService.getById(2L);
         Owner owner2 = ownerService.getById(2L);
         car2.setOwner(owner2);
-        carService.save(car2);
 
         Favor favor1 = favorService.getById(1L);
         Ordering ordering1 = orderingService.getById(1L);
         Worker worker1 = workerService.getById(1L);
+        Product product1 = productService.getById(1L);
+        Product product2 = productService.getById(2L);
+        ordering1.setProducts(Set.of(product1, product2));
         favor1.setOrdering(ordering1);
         favor1.setWorker(worker1);
-        favorService.save(favor1);
+        owner1.setOrderings(Set.of(ordering1));
+        worker1.setOrderings(Set.of(ordering1));
 
         Favor favor2 = favorService.getById(2L);
         Ordering ordering2 = orderingService.getById(2L);
         Worker worker2 = workerService.getById(2L);
+        Product product3 = productService.getById(3L);
+        ordering2.setProducts(Set.of(product3));
         favor2.setOrdering(ordering2);
         favor2.setWorker(worker2);
+        owner2.setOrderings(Set.of(ordering2));
+        worker2.setOrderings(Set.of(ordering2));
+
+        carService.save(car1);
+        carService.save(car2);
+        favorService.save(favor1);
         favorService.save(favor2);
+        ownerService.save(owner1);
+        ownerService.save(owner2);
+        workerService.save(worker1);
+        workerService.save(worker2);
+        orderingService.save(ordering1);
+        orderingService.save(ordering2);
 
         return "Linked!";
-    }
-
-    @GetMapping("/link-two")
-    public String linkTwo() {
-        Worker worker1 = workerService.getById(1L);
-        Owner owner1 = ownerService.getById(1L);
-        Ordering ordering1 = orderingService.getById(1L);
-        worker1.setOrderings(List.of(ordering1));
-        owner1.setOrderings(Set.of(ordering1));
-        workerService.save(worker1);
-        ownerService.save(owner1);
-
-        Worker worker2 = workerService.getById(2L);
-        Owner owner2 = ownerService.getById(2L);
-        Ordering ordering2 = orderingService.getById(2L);
-        worker2.setOrderings(List.of(ordering2));
-        owner2.setOrderings(Set.of(ordering2));
-        workerService.save(worker2);
-        ownerService.save(owner2);
-
-        return "Done!";
     }
 }

@@ -23,7 +23,7 @@ public class WorkerMapper implements RequestDtoMapper<WorkerRequestDto, Worker>,
         worker.setName(dto.getName());
         worker.setOrderings(dto.getOrderingIds().stream()
                 .map(orderingService::getById)
-                .collect(Collectors.toList()));
+                .collect(Collectors.toSet()));
         return worker;
     }
 
