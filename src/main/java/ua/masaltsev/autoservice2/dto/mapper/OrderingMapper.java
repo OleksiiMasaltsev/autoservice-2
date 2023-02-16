@@ -38,11 +38,11 @@ public class OrderingMapper implements RequestDtoMapper<OrderingRequestDto, Orde
 
         ordering.setFavors(dto.getFavorIds().stream()
                 .map(favorService::getById)
-                .collect(Collectors.toList()));
+                .collect(Collectors.toSet()));
 
         ordering.setProducts(dto.getProductIds().stream()
                 .map(productService::getById)
-                .collect(Collectors.toList()));
+                .collect(Collectors.toSet()));
 
         return ordering;
     }
