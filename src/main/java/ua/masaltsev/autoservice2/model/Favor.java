@@ -27,6 +27,7 @@ public class Favor {
     @SequenceGenerator(name = "favor_generator", sequenceName = "favor_seq", allocationSize = 1)
     @Column(name = "id", nullable = false)
     private Long id;
+    private String description;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ordering_id")
     private Ordering ordering;

@@ -14,6 +14,7 @@ import jakarta.persistence.Table;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 import lombok.Getter;
 import lombok.Setter;
 import ua.masaltsev.autoservice2.model.status.OrderingStatus;
@@ -35,10 +36,10 @@ public class Ordering {
     @Column(name = "completion_time")
     private LocalDateTime completionTime;
     @OneToMany(mappedBy = "ordering")
-    private List<Favor> favors;
+    private Set<Favor> favors;
     @OneToMany
     @JoinColumn(name = "ordering_id")
-    private List<Product> products;
+    private Set<Product> products;
     @Enumerated(EnumType.STRING)
     private OrderingStatus status;
     private BigDecimal price;
