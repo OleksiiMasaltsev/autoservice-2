@@ -44,11 +44,11 @@ public class OwnerMapper implements RequestDtoMapper<OwnerRequestDto, Owner>,
 
         dto.setCarIds(owner.getCars().stream()
                 .map(Car::getId)
-                .collect(Collectors.toList()));
+                .collect(Collectors.toSet()));
 
         dto.setOrderingIds(owner.getOrderings().stream()
                 .map(Ordering::getId)
-                .collect(Collectors.toList()));
+                .collect(Collectors.toSet()));
         return dto;
     }
 }

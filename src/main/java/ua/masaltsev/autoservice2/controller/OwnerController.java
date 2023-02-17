@@ -1,5 +1,7 @@
 package ua.masaltsev.autoservice2.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +20,7 @@ import ua.masaltsev.autoservice2.service.OwnerService;
 
 @RestController
 @RequestMapping("/owners")
+@Tag(name = "Owner controller")
 public class OwnerController {
     private final OwnerService ownerService;
     private final OwnerMapper ownerMapper;
@@ -32,11 +35,13 @@ public class OwnerController {
     }
 
     @PostMapping
+    @Operation(summary = "save new owner")
     public OwnerResponseDto save(@RequestBody OwnerRequestDto requestDto) {
         return ownerMapper.mapToDto(ownerService.save(ownerMapper.mapToModel(requestDto)));
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "update an owner")
     public OwnerResponseDto update(@RequestBody OwnerRequestDto requestDto,
                                    @PathVariable Long id) {
         Owner owner = ownerMapper.mapToModel(requestDto);
@@ -45,6 +50,7 @@ public class OwnerController {
     }
 
     @GetMapping("/orderings/{id}")
+    @Operation(summary = "get a list of owner's orderings")
     public List<OrderingResponseDto> getOrderings(@PathVariable Long id) {
         return ownerService.getById(id).getOrderings().stream()
                 .map(orderingMapper::mapToDto)

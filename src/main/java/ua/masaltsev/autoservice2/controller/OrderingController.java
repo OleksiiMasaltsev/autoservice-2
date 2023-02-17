@@ -1,5 +1,7 @@
 package ua.masaltsev.autoservice2.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +22,7 @@ import ua.masaltsev.autoservice2.service.ProductService;
 
 @RestController
 @RequestMapping("/orderings")
+@Tag(name = "Ordering controller")
 public class OrderingController {
     private final OrderingService orderingService;
     private final ProductService productService;
@@ -37,12 +40,14 @@ public class OrderingController {
     }
 
     @PostMapping
+    @Operation(summary = "save new ordering")
     public OrderingResponseDto save(@RequestBody OrderingRequestDto requestDto) {
         return orderingMapper.mapToDto(
                 orderingService.save(orderingMapper.mapToModel(requestDto)));
     }
 
     @PostMapping("/product")
+    @Operation(summary = "add product to a ordering")
     public OrderingResponseDto addProduct(@RequestParam Long productId,
                                           @RequestParam Long orderingId) {
         Product product = productService.getById(productId);
@@ -52,6 +57,7 @@ public class OrderingController {
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "update an ordering")
     public OrderingResponseDto update(@RequestBody OrderingRequestDto requestDto,
                                       @PathVariable Long id) {
         Ordering ordering = orderingMapper.mapToModel(requestDto);
@@ -60,6 +66,7 @@ public class OrderingController {
     }
 
     @PutMapping
+    @Operation(summary = "update status of an ordering")
     public OrderingResponseDto updateOrderingStatus(@RequestParam String status,
                                                     @RequestParam Long id) {
         Ordering ordering = orderingService.getById(id);
@@ -68,6 +75,7 @@ public class OrderingController {
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "calculate and get price of an ordering")
     public OrderingResponseDto calculatePrice(@PathVariable Long id) {
         return orderingMapper.mapToDto(orderingService.calculatePrice(id));
     }

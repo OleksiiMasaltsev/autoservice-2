@@ -8,6 +8,9 @@ import ua.masaltsev.autoservice2.model.Worker;
 @Repository
 public interface WorkerRepository extends JpaRepository<Worker, Long> {
     @Override
-    @Query("from Worker w left join fetch w.orderings where w.id = ?1")
+    @Query("from Worker w left join fetch w.orderings o "
+            + "left join fetch o.products "
+            + "left join fetch o.favors "
+            + "where w.id = ?1")
     Worker getReferenceById(Long id);
 }

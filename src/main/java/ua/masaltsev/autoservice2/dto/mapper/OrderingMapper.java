@@ -60,11 +60,11 @@ public class OrderingMapper implements RequestDtoMapper<OrderingRequestDto, Orde
 
         dto.setFavorIds(ordering.getFavors().stream()
                 .map(Favor::getId)
-                .collect(Collectors.toList()));
+                .collect(Collectors.toSet()));
 
         dto.setProductIds(ordering.getProducts().stream()
                 .map(Product::getId)
-                .collect(Collectors.toList()));
+                .collect(Collectors.toSet()));
 
         return dto;
     }

@@ -1,5 +1,10 @@
 package ua.masaltsev.autoservice2.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.Set;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ua.masaltsev.autoservice2.model.Car;
@@ -16,12 +21,9 @@ import ua.masaltsev.autoservice2.service.OrderingService;
 import ua.masaltsev.autoservice2.service.OwnerService;
 import ua.masaltsev.autoservice2.service.ProductService;
 import ua.masaltsev.autoservice2.service.WorkerService;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Set;
 
 @RestController
+@Tag(name = "Bootstrap controller", description = "load initial entities to the DB")
 public class BootstrapController {
     private final ProductService productService;
     private final WorkerService workerService;
@@ -44,6 +46,7 @@ public class BootstrapController {
         this.orderingService = orderingService;
     }
 
+    @Operation(summary = "load and link entities")
     @GetMapping("/init")
     public String loadData() {
         //products
@@ -91,9 +94,6 @@ public class BootstrapController {
         car2.setYear((short) 2019);
         car2.setPlate("9927");
         car2.setOwner(null);
-
-//        carService.save(car1);
-//        carService.save(car2);
 
         //orderings
         Ordering ordering1 = new Ordering();
@@ -151,7 +151,7 @@ public class BootstrapController {
         favorService.save(favor1);
         favorService.save(favor2);
 
-        return "Done!" + linkOne();
+        return "Created and " + linkOne();
     }
 
     public String linkOne() {
@@ -195,6 +195,6 @@ public class BootstrapController {
         orderingService.save(ordering1);
         orderingService.save(ordering2);
 
-        return "Linked!";
+        return "linked!";
     }
 }

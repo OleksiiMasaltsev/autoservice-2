@@ -1,5 +1,7 @@
 package ua.masaltsev.autoservice2.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -14,6 +16,7 @@ import ua.masaltsev.autoservice2.service.ProductService;
 
 @RestController
 @RequestMapping("/products")
+@Tag(name = "Product controller")
 public class ProductController {
     private final ProductService productService;
     private final ProductMapper productMapper;
@@ -25,11 +28,13 @@ public class ProductController {
     }
 
     @PostMapping
+    @Operation(summary = "save new product")
     public ProductResponseDto save(@RequestBody ProductRequestDto requestDto) {
         return productMapper.mapToDto(productService.save(productMapper.mapToModel(requestDto)));
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "update a product")
     public ProductResponseDto update(@RequestBody ProductRequestDto requestDto,
                                      @PathVariable Long id) {
         Product product = productMapper.mapToModel(requestDto);

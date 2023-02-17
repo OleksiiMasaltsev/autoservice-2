@@ -8,8 +8,8 @@ import ua.masaltsev.autoservice2.model.Ordering;
 @Repository
 public interface OrderingRepository extends JpaRepository<Ordering, Long> {
     @Override
-    @Query("from Ordering o left join fetch o.favors " +
-            "left join fetch o.products " +
-            "where o.id = ?1")
+    @Query("from Ordering o left join fetch o.favors "
+            + "left join fetch o.products "
+            + "where o.id = ?1")
     Ordering getReferenceById(Long id);
 }

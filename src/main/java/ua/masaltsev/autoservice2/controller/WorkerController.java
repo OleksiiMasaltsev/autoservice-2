@@ -1,5 +1,8 @@
 package ua.masaltsev.autoservice2.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,17 +15,13 @@ import ua.masaltsev.autoservice2.dto.mapper.WorkerMapper;
 import ua.masaltsev.autoservice2.dto.request.WorkerRequestDto;
 import ua.masaltsev.autoservice2.dto.response.OrderingResponseDto;
 import ua.masaltsev.autoservice2.dto.response.WorkerResponseDto;
-import ua.masaltsev.autoservice2.model.Favor;
-import ua.masaltsev.autoservice2.model.Ordering;
 import ua.masaltsev.autoservice2.model.Worker;
-import ua.masaltsev.autoservice2.model.status.FavorStatus;
 import ua.masaltsev.autoservice2.service.OrderingService;
 import ua.masaltsev.autoservice2.service.WorkerService;
-import java.math.BigDecimal;
-import java.util.List;
 
 @RestController
 @RequestMapping("/workers")
+@Tag(name = "Worker controller")
 public class WorkerController {
     private final WorkerService workerService;
     private final OrderingService orderingService;
@@ -40,11 +39,13 @@ public class WorkerController {
     }
 
     @PostMapping
+    @Operation(summary = "save new worker")
     public WorkerResponseDto save(@RequestBody WorkerRequestDto requestDto) {
         return workerMapper.mapToDto(workerService.save(workerMapper.mapToModel(requestDto)));
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "update a worker")
     public WorkerResponseDto update(@RequestBody WorkerRequestDto requestDto,
                                     @PathVariable Long id) {
         Worker worker = workerMapper.mapToModel(requestDto);
@@ -53,21 +54,10 @@ public class WorkerController {
     }
 
     @GetMapping("/orderings/{id}")
+    @Operation(summary = "get a list of worker's orderings")
     public List<OrderingResponseDto> getOrderings(@PathVariable Long id) {
         return workerService.getById(id).getOrderings().stream()
                 .map(orderingMapper::mapToDto)
                 .toList();
     }
-
-//    @GetMapping("/{id}")
-//    public BigDecimal calculateAndPay(@PathVariable Long id) {
-//        List<Ordering> orderings = workerService.getById(id).getOrderings();
-//        List<Favor> filteredFavors = orderings.stream()
-//                .flatMap(ordering -> ordering.getFavors().stream())
-//                .filter(favor -> favor.getWorker().getId().equals(id))
-//                .toList();
-//        filteredFavors
-//                .forEach(favor -> favor.setStatus(FavorStatus.PAID));
-//
-//    }
 }
