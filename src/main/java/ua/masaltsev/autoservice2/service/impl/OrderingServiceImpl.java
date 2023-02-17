@@ -33,7 +33,7 @@ public class OrderingServiceImpl implements OrderingService {
     }
 
     @Override
-    public Ordering calculatePrice(Long id) {
+    public BigDecimal calculatePrice(Long id) {
         Ordering ordering = getById(id);
 
         BigDecimal productsPrice = ordering.getProducts().stream()
@@ -52,9 +52,12 @@ public class OrderingServiceImpl implements OrderingService {
                 BigDecimal.valueOf(100), RoundingMode.HALF_UP)
                         .multiply(BigDecimal.valueOf(orderingCount * 2));
 
-        ordering.setPrice(productsPrice.subtract(productsDiscount)
-                .add(favorsPrice).subtract(favorDiscount));
+        BigDecimal price = productsPrice.subtract(productsDiscount)
+                .add(favorsPrice).subtract(favorDiscount);
 
-        return orderingRepository.save(ordering);
+        ordering.setPrice(price);
+        save(ordering);
+
+        return price;
     }
 }

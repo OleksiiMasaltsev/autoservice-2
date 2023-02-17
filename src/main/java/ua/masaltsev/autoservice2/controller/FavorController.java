@@ -43,7 +43,7 @@ public class FavorController {
         return favorMapper.mapToDto(favorService.save(favor));
     }
 
-    @PutMapping
+    @PutMapping("/status")
     @Operation(summary = "update status of a favor")
     public FavorResponseDto updateFavorStatus(@RequestParam String status,
                                               @RequestParam Long id) {

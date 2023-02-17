@@ -7,7 +7,6 @@ import lombok.Data;
 public class FavorResponseDto {
     private Long id;
     private BigDecimal price;
-    private String description;
     private Long orderingId;
     private Long workerId;
     private String status;

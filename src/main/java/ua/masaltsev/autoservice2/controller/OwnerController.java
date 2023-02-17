@@ -49,7 +49,7 @@ public class OwnerController {
         return ownerMapper.mapToDto(ownerService.save(owner));
     }
 
-    @GetMapping("/orderings/{id}")
+    @GetMapping("/{id}/orderings")
     @Operation(summary = "get a list of owner's orderings")
     public List<OrderingResponseDto> getOrderings(@PathVariable Long id) {
         return ownerService.getById(id).getOrderings().stream()

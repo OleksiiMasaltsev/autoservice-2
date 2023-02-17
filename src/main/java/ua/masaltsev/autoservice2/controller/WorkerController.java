@@ -53,7 +53,7 @@ public class WorkerController {
         return workerMapper.mapToDto(workerService.save(worker));
     }
 
-    @GetMapping("/orderings/{id}")
+    @GetMapping("/{id}/orderings")
     @Operation(summary = "get a list of worker's orderings")
     public List<OrderingResponseDto> getOrderings(@PathVariable Long id) {
         return workerService.getById(id).getOrderings().stream()

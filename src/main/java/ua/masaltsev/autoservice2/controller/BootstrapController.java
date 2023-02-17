@@ -98,7 +98,7 @@ public class BootstrapController {
         //orderings
         Ordering ordering1 = new Ordering();
         ordering1.setDescription("change oil and filter");
-        ordering1.setPrice(BigDecimal.valueOf(32.00));
+        ordering1.setPrice(null);
         LocalDateTime now1 = LocalDateTime.now();
         ordering1.setReceivingTime(now1);
         ordering1.setCompletionTime(now1.plusHours(3));
@@ -109,7 +109,7 @@ public class BootstrapController {
 
         Ordering ordering2 = new Ordering();
         ordering2.setDescription("repair brakes");
-        ordering2.setPrice(BigDecimal.valueOf(28.45));
+        ordering2.setPrice(null);
         LocalDateTime now2 = LocalDateTime.now();
         ordering2.setReceivingTime(now2);
         ordering2.setCompletionTime(now2.plusHours(2));
@@ -136,14 +136,12 @@ public class BootstrapController {
         //favors
         Favor favor1 = new Favor();
         favor1.setPrice(BigDecimal.valueOf(4.56));
-        favor1.setDescription("oil change");
         favor1.setWorker(null);
         favor1.setOrdering(null);
         favor1.setStatus(FavorStatus.UNPAID);
 
         Favor favor2 = new Favor();
         favor2.setPrice(BigDecimal.valueOf(15.66));
-        favor2.setDescription("brakes change");
         favor2.setWorker(null);
         favor2.setOrdering(null);
         favor2.setStatus(FavorStatus.UNPAID);

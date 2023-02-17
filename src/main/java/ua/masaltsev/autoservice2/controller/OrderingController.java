@@ -2,6 +2,7 @@ package ua.masaltsev.autoservice2.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.math.BigDecimal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -65,7 +66,7 @@ public class OrderingController {
         return orderingMapper.mapToDto(orderingService.save(ordering));
     }
 
-    @PutMapping
+    @PutMapping("/status")
     @Operation(summary = "update status of an ordering")
     public OrderingResponseDto updateOrderingStatus(@RequestParam String status,
                                                     @RequestParam Long id) {
@@ -74,9 +75,9 @@ public class OrderingController {
         return orderingMapper.mapToDto(orderingService.save(ordering));
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id}/price")
     @Operation(summary = "calculate and get price of an ordering")
-    public OrderingResponseDto calculatePrice(@PathVariable Long id) {
-        return orderingMapper.mapToDto(orderingService.calculatePrice(id));
+    public BigDecimal calculatePrice(@PathVariable Long id) {
+        return orderingService.calculatePrice(id);
     }
 }

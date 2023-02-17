@@ -10,6 +10,10 @@ public interface OrderingRepository extends JpaRepository<Ordering, Long> {
     @Override
     @Query("from Ordering o left join fetch o.favors "
             + "left join fetch o.products "
+            + "left join fetch o.car c "
+            + "left join fetch c.owner owner "
+            + "left join fetch owner.orderings "
+            + "left join fetch owner.cars "
             + "where o.id = ?1")
     Ordering getReferenceById(Long id);
 }
