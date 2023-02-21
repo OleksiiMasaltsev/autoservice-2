@@ -29,11 +29,9 @@ public class OrderingMapper implements RequestDtoMapper<OrderingRequestDto, Orde
     @Override
     public Ordering mapToModel(OrderingRequestDto dto) {
         Ordering ordering = new Ordering();
-        ordering.setPrice(dto.getPrice());
-        ordering.setDescription(dto.getDescription());
-        ordering.setReceivingTime(dto.getReceivingTime());
-        ordering.setCompletionTime(dto.getCompletionTime());
         ordering.setCar(carService.getById(dto.getCarId()));
+        ordering.setDescription(dto.getDescription());
+        ordering.setCompletionTime(dto.getCompletionTime());
         ordering.setStatus(OrderingStatus.valueOf(dto.getStatus().toUpperCase()));
 
         ordering.setFavors(dto.getFavorIds().stream()
@@ -55,7 +53,6 @@ public class OrderingMapper implements RequestDtoMapper<OrderingRequestDto, Orde
         dto.setDescription(ordering.getDescription());
         dto.setReceivingTime(ordering.getReceivingTime());
         dto.setCompletionTime(ordering.getCompletionTime());
-        dto.setCarId(ordering.getCar().getId());
         dto.setStatus(ordering.getStatus().toString());
 
         dto.setFavorIds(ordering.getFavors().stream()

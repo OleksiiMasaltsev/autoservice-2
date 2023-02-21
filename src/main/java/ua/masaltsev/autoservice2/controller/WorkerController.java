@@ -16,7 +16,6 @@ import ua.masaltsev.autoservice2.dto.request.WorkerRequestDto;
 import ua.masaltsev.autoservice2.dto.response.OrderingResponseDto;
 import ua.masaltsev.autoservice2.dto.response.WorkerResponseDto;
 import ua.masaltsev.autoservice2.model.Worker;
-import ua.masaltsev.autoservice2.service.OrderingService;
 import ua.masaltsev.autoservice2.service.WorkerService;
 
 @RestController
@@ -24,16 +23,13 @@ import ua.masaltsev.autoservice2.service.WorkerService;
 @Tag(name = "Worker controller")
 public class WorkerController {
     private final WorkerService workerService;
-    private final OrderingService orderingService;
     private final WorkerMapper workerMapper;
     private final OrderingMapper orderingMapper;
 
     public WorkerController(WorkerService workerService,
-                            OrderingService orderingService,
                             WorkerMapper workerMapper,
                             OrderingMapper orderingMapper) {
         this.workerService = workerService;
-        this.orderingService = orderingService;
         this.workerMapper = workerMapper;
         this.orderingMapper = orderingMapper;
     }

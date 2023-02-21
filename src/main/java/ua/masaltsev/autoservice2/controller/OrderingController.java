@@ -3,6 +3,7 @@ package ua.masaltsev.autoservice2.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.math.BigDecimal;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ua.masaltsev.autoservice2.dto.mapper.OrderingMapper;
-import ua.masaltsev.autoservice2.dto.mapper.ProductMapper;
 import ua.masaltsev.autoservice2.dto.request.OrderingRequestDto;
 import ua.masaltsev.autoservice2.dto.response.OrderingResponseDto;
 import ua.masaltsev.autoservice2.model.Ordering;
@@ -28,20 +28,18 @@ public class OrderingController {
     private final OrderingService orderingService;
     private final ProductService productService;
     private final OrderingMapper orderingMapper;
-    private final ProductMapper productMapper;
 
     public OrderingController(OrderingService orderingService,
                               ProductService productService,
-                              OrderingMapper orderingMapper,
-                              ProductMapper productMapper) {
+                              OrderingMapper orderingMapper) {
         this.orderingService = orderingService;
         this.productService = productService;
         this.orderingMapper = orderingMapper;
-        this.productMapper = productMapper;
     }
 
     @PostMapping
     @Operation(summary = "save new ordering")
+    @Transactional
     public OrderingResponseDto save(@RequestBody OrderingRequestDto requestDto) {
         return orderingMapper.mapToDto(
                 orderingService.save(orderingMapper.mapToModel(requestDto)));

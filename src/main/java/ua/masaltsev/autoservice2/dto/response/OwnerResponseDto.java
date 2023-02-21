@@ -8,5 +8,4 @@ public class OwnerResponseDto {
     private Long id;
     private String name;
     private Set<Long> carIds;
-    private Set<Long> orderingIds;
 }

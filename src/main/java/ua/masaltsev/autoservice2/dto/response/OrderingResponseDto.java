@@ -8,7 +8,6 @@ import lombok.Data;
 @Data
 public class OrderingResponseDto {
     private Long id;
-    private Long carId;
     private String description;
     private LocalDateTime receivingTime;
     private LocalDateTime completionTime;
