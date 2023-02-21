@@ -1,5 +1,9 @@
 package ua.masaltsev.autoservice2.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import java.math.BigDecimal;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ua.masaltsev.autoservice2.dto.mapper.OrderingMapper;
-import ua.masaltsev.autoservice2.dto.mapper.ProductMapper;
 import ua.masaltsev.autoservice2.dto.request.OrderingRequestDto;
 import ua.masaltsev.autoservice2.dto.response.OrderingResponseDto;
 import ua.masaltsev.autoservice2.model.Ordering;
@@ -20,29 +23,30 @@ import ua.masaltsev.autoservice2.service.ProductService;
 
 @RestController
 @RequestMapping("/orderings")
+@Tag(name = "Ordering controller")
 public class OrderingController {
     private final OrderingService orderingService;
     private final ProductService productService;
     private final OrderingMapper orderingMapper;
-    private final ProductMapper productMapper;
 
     public OrderingController(OrderingService orderingService,
                               ProductService productService,
-                              OrderingMapper orderingMapper,
-                              ProductMapper productMapper) {
+                              OrderingMapper orderingMapper) {
         this.orderingService = orderingService;
         this.productService = productService;
         this.orderingMapper = orderingMapper;
-        this.productMapper = productMapper;
     }
 
     @PostMapping
+    @Operation(summary = "save new ordering")
+    @Transactional
     public OrderingResponseDto save(@RequestBody OrderingRequestDto requestDto) {
         return orderingMapper.mapToDto(
                 orderingService.save(orderingMapper.mapToModel(requestDto)));
     }
 
     @PostMapping("/product")
+    @Operation(summary = "add product to a ordering")
     public OrderingResponseDto addProduct(@RequestParam Long productId,
                                           @RequestParam Long orderingId) {
         Product product = productService.getById(productId);
@@ -52,6 +56,7 @@ public class OrderingController {
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "update an ordering")
     public OrderingResponseDto update(@RequestBody OrderingRequestDto requestDto,
                                       @PathVariable Long id) {
         Ordering ordering = orderingMapper.mapToModel(requestDto);
@@ -59,7 +64,8 @@ public class OrderingController {
         return orderingMapper.mapToDto(orderingService.save(ordering));
     }
 
-    @PutMapping
+    @PutMapping("/status")
+    @Operation(summary = "update status of an ordering")
     public OrderingResponseDto updateOrderingStatus(@RequestParam String status,
                                                     @RequestParam Long id) {
         Ordering ordering = orderingService.getById(id);
@@ -67,8 +73,9 @@ public class OrderingController {
         return orderingMapper.mapToDto(orderingService.save(ordering));
     }
 
-    @GetMapping("/{id}")
-    public OrderingResponseDto calculatePrice(@PathVariable Long id) {
-        return orderingMapper.mapToDto(orderingService.calculatePrice(id));
+    @GetMapping("/{id}/price")
+    @Operation(summary = "calculate and get price of an ordering")
+    public BigDecimal calculatePrice(@PathVariable Long id) {
+        return orderingService.calculatePrice(id);
     }
 }

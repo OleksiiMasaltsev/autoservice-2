@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 import ua.masaltsev.autoservice2.dto.request.OwnerRequestDto;
 import ua.masaltsev.autoservice2.dto.response.OwnerResponseDto;
 import ua.masaltsev.autoservice2.model.Car;
-import ua.masaltsev.autoservice2.model.Ordering;
 import ua.masaltsev.autoservice2.model.Owner;
 import ua.masaltsev.autoservice2.service.CarService;
 import ua.masaltsev.autoservice2.service.OrderingService;
@@ -44,11 +43,8 @@ public class OwnerMapper implements RequestDtoMapper<OwnerRequestDto, Owner>,
 
         dto.setCarIds(owner.getCars().stream()
                 .map(Car::getId)
-                .collect(Collectors.toList()));
+                .collect(Collectors.toSet()));
 
-        dto.setOrderingIds(owner.getOrderings().stream()
-                .map(Ordering::getId)
-                .collect(Collectors.toList()));
         return dto;
     }
 }

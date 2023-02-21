@@ -9,7 +9,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
-import java.util.List;
+import java.util.Set;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,5 +26,5 @@ public class Worker {
     private String name;
     @OneToMany
     @JoinColumn(name = "worker_id")
-    private List<Ordering> orderings;
+    private Set<Ordering> orderings;
 }

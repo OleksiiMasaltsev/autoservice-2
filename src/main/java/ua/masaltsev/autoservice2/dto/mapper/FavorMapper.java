@@ -23,7 +23,6 @@ public class FavorMapper implements RequestDtoMapper<FavorRequestDto, Favor>,
     public Favor mapToModel(FavorRequestDto dto) {
         Favor favor = new Favor();
         favor.setPrice(dto.getPrice());
-        favor.setDescription(dto.getDescription());
         favor.setWorker(workerService.getById(dto.getWorkerId()));
         favor.setOrdering(orderingService.getById(dto.getOrderingId()));
         favor.setStatus(FavorStatus.valueOf(dto.getStatus().toUpperCase()));
@@ -35,7 +34,6 @@ public class FavorMapper implements RequestDtoMapper<FavorRequestDto, Favor>,
         FavorResponseDto dto = new FavorResponseDto();
         dto.setId(favor.getId());
         dto.setPrice(favor.getPrice());
-        dto.setDescription(favor.getDescription());
         dto.setWorkerId(favor.getWorker().getId());
         dto.setOrderingId(favor.getOrdering().getId());
         dto.setStatus(favor.getStatus().toString());

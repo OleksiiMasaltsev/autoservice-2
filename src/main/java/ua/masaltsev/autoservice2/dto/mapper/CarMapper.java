@@ -34,7 +34,6 @@ public class CarMapper implements RequestDtoMapper<CarRequestDto,
         dto.setModel(car.getModel());
         dto.setBrand(car.getBrand());
         dto.setPlate(car.getPlate());
-        dto.setOwnerId(car.getOwner().getId());
         return dto;
     }
 }
