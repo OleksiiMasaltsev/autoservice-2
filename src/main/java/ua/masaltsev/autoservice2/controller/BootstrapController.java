@@ -23,7 +23,7 @@ public class BootstrapController {
         this.workerService = workerService;
     }
 
-    @Operation(summary = "load and link entities")
+    @Operation(summary = "load entities (products, workers)")
     @GetMapping("/init")
     public String loadData() {
         Product product1 = new Product();

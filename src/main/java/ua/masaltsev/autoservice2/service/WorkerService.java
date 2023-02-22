@@ -1,5 +1,6 @@
 package ua.masaltsev.autoservice2.service;
 
+import java.math.BigDecimal;
 import ua.masaltsev.autoservice2.model.Worker;
 
 public interface WorkerService {
@@ -8,4 +9,6 @@ public interface WorkerService {
     Worker getById(Long id);
 
     void delete(Long id);
+
+    BigDecimal getSalary(Long id);
 }
