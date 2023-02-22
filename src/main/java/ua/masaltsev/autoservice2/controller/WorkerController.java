@@ -2,6 +2,7 @@ package ua.masaltsev.autoservice2.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.math.BigDecimal;
 import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -55,5 +56,11 @@ public class WorkerController {
         return workerService.getById(id).getOrderings().stream()
                 .map(orderingMapper::mapToDto)
                 .toList();
+    }
+
+    @GetMapping("/{id}/salary")
+    @Operation(summary = "calculate and get worker's salary")
+    public BigDecimal calculateAndGetSalary(@PathVariable Long id) {
+        return workerService.getSalary(id);
     }
 }
