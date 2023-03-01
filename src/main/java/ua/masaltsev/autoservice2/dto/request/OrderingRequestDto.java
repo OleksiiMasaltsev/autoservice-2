@@ -11,5 +11,4 @@ public class OrderingRequestDto {
     private LocalDateTime completionTime;
     private Set<Long> favorIds;
     private Set<Long> productIds;
-    private String status;
 }

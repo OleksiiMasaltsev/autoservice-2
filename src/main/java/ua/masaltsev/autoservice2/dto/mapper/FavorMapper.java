@@ -25,7 +25,6 @@ public class FavorMapper implements RequestDtoMapper<FavorRequestDto, Favor>,
         favor.setPrice(dto.getPrice());
         favor.setWorker(workerService.getById(dto.getWorkerId()));
         favor.setOrdering(orderingService.getById(dto.getOrderingId()));
-        favor.setStatus(FavorStatus.valueOf(dto.getStatus().toUpperCase()));
         return favor;
     }
 
