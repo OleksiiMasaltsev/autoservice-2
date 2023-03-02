@@ -8,7 +8,6 @@ import ua.masaltsev.autoservice2.model.Favor;
 import ua.masaltsev.autoservice2.model.Ordering;
 import ua.masaltsev.autoservice2.model.Product;
 import ua.masaltsev.autoservice2.repository.OrderingRepository;
-import ua.masaltsev.autoservice2.repository.OwnerRepository;
 import ua.masaltsev.autoservice2.service.OrderingService;
 
 @Service
@@ -16,12 +15,9 @@ public class OrderingServiceImpl implements OrderingService {
     private static final float FAVOR_DISCOUNT_PERCENTAGE = 2.0f;
     private static final float PRODUCT_DISCOUNT_PERCENTAGE = 1.0f;
     private final OrderingRepository orderingRepository;
-    private final OwnerRepository ownerRepository;
 
-    public OrderingServiceImpl(OrderingRepository orderingRepository,
-                               OwnerRepository ownerRepository) {
+    public OrderingServiceImpl(OrderingRepository orderingRepository) {
         this.orderingRepository = orderingRepository;
-        this.ownerRepository = ownerRepository;
     }
 
     @Override
@@ -44,7 +40,7 @@ public class OrderingServiceImpl implements OrderingService {
 
     @Override
     public BigDecimal calculatePrice(Long id) {
-        Ordering ordering = getFetchedOrdering(id);
+        Ordering ordering = orderingRepository.getFetchedOrdering(id);
 
         BigDecimal productsTotalPrice = ordering.getProducts().stream()
                 .map(Product::getPrice)
@@ -53,14 +49,14 @@ public class OrderingServiceImpl implements OrderingService {
                 .map(Favor::getPrice)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-        int size = ordering.getCar().getOwner().getOrderings().size();
+        int count = ordering.getCar().getOwner().getOrderings().size();
 
         BigDecimal productsDiscount = productsTotalPrice.divide(
                         BigDecimal.valueOf(100), RoundingMode.HALF_UP)
-                .multiply(BigDecimal.valueOf((long) size * PRODUCT_DISCOUNT_PERCENTAGE));
+                .multiply(BigDecimal.valueOf(count * PRODUCT_DISCOUNT_PERCENTAGE));
         BigDecimal favorDiscount = favorsTotalPrice.divide(
                         BigDecimal.valueOf(100), RoundingMode.HALF_UP)
-                .multiply(BigDecimal.valueOf((long) size * FAVOR_DISCOUNT_PERCENTAGE));
+                .multiply(BigDecimal.valueOf(count * FAVOR_DISCOUNT_PERCENTAGE));
 
         BigDecimal price = productsTotalPrice.subtract(productsDiscount)
                 .add(favorsTotalPrice).subtract(favorDiscount);
@@ -69,9 +65,5 @@ public class OrderingServiceImpl implements OrderingService {
         save(ordering);
 
         return price;
-    }
-
-    private Ordering getFetchedOrdering(Long id) {
-        return orderingRepository.getFetchedOrdering(id);
     }
 }

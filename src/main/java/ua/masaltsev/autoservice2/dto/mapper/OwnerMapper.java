@@ -4,7 +4,6 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
 import ua.masaltsev.autoservice2.dto.request.OwnerRequestDto;
 import ua.masaltsev.autoservice2.dto.response.OwnerResponseDto;
-import ua.masaltsev.autoservice2.model.Car;
 import ua.masaltsev.autoservice2.model.Owner;
 import ua.masaltsev.autoservice2.service.CarService;
 import ua.masaltsev.autoservice2.service.OrderingService;

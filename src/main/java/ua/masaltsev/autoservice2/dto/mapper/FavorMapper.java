@@ -4,7 +4,6 @@ import org.springframework.stereotype.Component;
 import ua.masaltsev.autoservice2.dto.request.FavorRequestDto;
 import ua.masaltsev.autoservice2.dto.response.FavorResponseDto;
 import ua.masaltsev.autoservice2.model.Favor;
-import ua.masaltsev.autoservice2.model.status.FavorStatus;
 import ua.masaltsev.autoservice2.service.OrderingService;
 import ua.masaltsev.autoservice2.service.WorkerService;
 
