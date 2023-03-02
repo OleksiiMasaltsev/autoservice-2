@@ -32,6 +32,7 @@ public class OrderingMapper implements RequestDtoMapper<OrderingRequestDto, Orde
         ordering.setCar(carService.getById(dto.getCarId()));
         ordering.setDescription(dto.getDescription());
         ordering.setCompletionTime(dto.getCompletionTime());
+        ordering.setStatus(OrderingStatus.valueOf(dto.getStatus().toUpperCase()));
 
         ordering.setFavors(dto.getFavorIds().stream()
                 .map(favorService::getById)

@@ -3,22 +3,25 @@ package ua.masaltsev.autoservice2.service.impl;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
-import java.util.Set;
 import org.springframework.stereotype.Service;
 import ua.masaltsev.autoservice2.model.Favor;
 import ua.masaltsev.autoservice2.model.Ordering;
 import ua.masaltsev.autoservice2.model.Product;
 import ua.masaltsev.autoservice2.repository.OrderingRepository;
+import ua.masaltsev.autoservice2.repository.OwnerRepository;
 import ua.masaltsev.autoservice2.service.OrderingService;
 
 @Service
 public class OrderingServiceImpl implements OrderingService {
-    private static final int FAVOR_DISCOUNT_PERCENTAGE = 2;
-    private static final int PRODUCT_DISCOUNT_PERCENTAGE = 1;
+    private static final float FAVOR_DISCOUNT_PERCENTAGE = 2.0f;
+    private static final float PRODUCT_DISCOUNT_PERCENTAGE = 1.0f;
     private final OrderingRepository orderingRepository;
+    private final OwnerRepository ownerRepository;
 
-    public OrderingServiceImpl(OrderingRepository orderingRepository) {
+    public OrderingServiceImpl(OrderingRepository orderingRepository,
+                               OwnerRepository ownerRepository) {
         this.orderingRepository = orderingRepository;
+        this.ownerRepository = ownerRepository;
     }
 
     @Override
@@ -41,26 +44,26 @@ public class OrderingServiceImpl implements OrderingService {
 
     @Override
     public BigDecimal calculatePrice(Long id) {
-        Ordering ordering = getById(id);
+        Ordering ordering = getFetchedOrdering(id);
 
-        BigDecimal productsPrice = ordering.getProducts().stream()
+        BigDecimal productsTotalPrice = ordering.getProducts().stream()
                 .map(Product::getPrice)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
-        BigDecimal favorsPrice = ordering.getFavors().stream()
+        BigDecimal favorsTotalPrice = ordering.getFavors().stream()
                 .map(Favor::getPrice)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-        long orderingCount = getOrderingList(id).size();
+        int size = ordering.getCar().getOwner().getOrderings().size();
 
-        BigDecimal productsDiscount = productsPrice.divide(
+        BigDecimal productsDiscount = productsTotalPrice.divide(
                         BigDecimal.valueOf(100), RoundingMode.HALF_UP)
-                .multiply(BigDecimal.valueOf(orderingCount * PRODUCT_DISCOUNT_PERCENTAGE));
-        BigDecimal favorDiscount = favorsPrice.divide(
+                .multiply(BigDecimal.valueOf((long) size * PRODUCT_DISCOUNT_PERCENTAGE));
+        BigDecimal favorDiscount = favorsTotalPrice.divide(
                         BigDecimal.valueOf(100), RoundingMode.HALF_UP)
-                .multiply(BigDecimal.valueOf(orderingCount * FAVOR_DISCOUNT_PERCENTAGE));
+                .multiply(BigDecimal.valueOf((long) size * FAVOR_DISCOUNT_PERCENTAGE));
 
-        BigDecimal price = productsPrice.subtract(productsDiscount)
-                .add(favorsPrice).subtract(favorDiscount);
+        BigDecimal price = productsTotalPrice.subtract(productsDiscount)
+                .add(favorsTotalPrice).subtract(favorDiscount);
 
         ordering.setPrice(price);
         save(ordering);
@@ -68,7 +71,7 @@ public class OrderingServiceImpl implements OrderingService {
         return price;
     }
 
-    private Set<Ordering> getOrderingList(Long id) {
-        return orderingRepository.getOrderingList(id);
+    private Ordering getFetchedOrdering(Long id) {
+        return orderingRepository.getFetchedOrdering(id);
     }
 }

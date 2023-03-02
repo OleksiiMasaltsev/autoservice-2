@@ -1,5 +1,8 @@
 package ua.masaltsev.autoservice2.model;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.Set;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -11,9 +14,6 @@ import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.Set;
 import lombok.Getter;
 import lombok.Setter;
 import ua.masaltsev.autoservice2.model.status.OrderingStatus;

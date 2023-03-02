@@ -7,5 +7,4 @@ import lombok.Data;
 public class OwnerResponseDto {
     private Long id;
     private String name;
-    private Set<Long> carIds;
 }

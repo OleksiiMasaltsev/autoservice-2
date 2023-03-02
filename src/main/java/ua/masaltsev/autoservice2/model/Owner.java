@@ -1,5 +1,6 @@
 package ua.masaltsev.autoservice2.model;
 
+import java.util.List;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,7 +10,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
-import java.util.Set;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,8 +25,8 @@ public class Owner {
     private Long id;
     private String name;
     @OneToMany(mappedBy = "owner")
-    private Set<Car> cars;
+    private List<Car> cars;
     @OneToMany
     @JoinColumn(name = "owner_id")
-    private Set<Ordering> orderings;
+    private List<Ordering> orderings;
 }

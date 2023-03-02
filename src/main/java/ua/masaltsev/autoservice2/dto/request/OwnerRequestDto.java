@@ -1,11 +1,11 @@
 package ua.masaltsev.autoservice2.dto.request;
 
-import java.util.Set;
+import java.util.List;
 import lombok.Data;
 
 @Data
 public class OwnerRequestDto {
     private String name;
-    private Set<Long> carIds;
-    private Set<Long> orderingIds;
+    private List<Long> carIds;
+    private List<Long> orderingIds;
 }
