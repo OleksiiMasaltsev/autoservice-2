@@ -6,7 +6,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import java.util.Set;
@@ -24,7 +25,9 @@ public class Worker {
     @Column(name = "id", nullable = false)
     private Long id;
     private String name;
-    @OneToMany
-    @JoinColumn(name = "worker_id")
+    @ManyToMany
+    @JoinTable(name = "workers_orderings",
+            joinColumns = @JoinColumn(name = "worker_id"),
+            inverseJoinColumns = @JoinColumn(name = "ordering_id"))
     private Set<Ordering> orderings;
 }

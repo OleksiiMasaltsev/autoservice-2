@@ -11,7 +11,7 @@ import ua.masaltsev.autoservice2.service.WorkerService;
 
 @Service
 public class WorkerServiceImpl implements WorkerService {
-    private static final double SALARY_PERCENTAGE = 0.4;
+    private static final float SALARY_PERCENTAGE = 0.4f;
     private final WorkerRepository workerRepository;
     private final FavorRepository favorRepository;
 
