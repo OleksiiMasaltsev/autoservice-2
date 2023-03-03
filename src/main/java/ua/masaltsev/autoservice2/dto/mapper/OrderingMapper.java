@@ -4,9 +4,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
 import ua.masaltsev.autoservice2.dto.request.OrderingRequestDto;
 import ua.masaltsev.autoservice2.dto.response.OrderingResponseDto;
-import ua.masaltsev.autoservice2.model.Favor;
 import ua.masaltsev.autoservice2.model.Ordering;
-import ua.masaltsev.autoservice2.model.Product;
 import ua.masaltsev.autoservice2.model.status.OrderingStatus;
 import ua.masaltsev.autoservice2.service.CarService;
 import ua.masaltsev.autoservice2.service.FavorService;
@@ -54,15 +52,6 @@ public class OrderingMapper implements RequestDtoMapper<OrderingRequestDto, Orde
         dto.setReceivingTime(ordering.getReceivingTime());
         dto.setCompletionTime(ordering.getCompletionTime());
         dto.setStatus(ordering.getStatus().toString());
-
-        dto.setFavorIds(ordering.getFavors().stream()
-                .map(Favor::getId)
-                .collect(Collectors.toSet()));
-
-        dto.setProductIds(ordering.getProducts().stream()
-                .map(Product::getId)
-                .collect(Collectors.toSet()));
-
         return dto;
     }
 }
