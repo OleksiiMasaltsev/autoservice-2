@@ -38,8 +38,7 @@ public class WorkerServiceImpl implements WorkerService {
 
     @Override
     public BigDecimal getSalary(Long id) {
-        Worker worker = workerRepository.getReferenceById(id);
-        return worker.getOrderings().stream()
+        return getById(id).getOrderings().stream()
                 .flatMap(ordering -> ordering.getFavors().stream())
                 .filter(favor -> favor.getStatus().equals(FavorStatus.UNPAID))
                 .peek(favor -> favor.setStatus(FavorStatus.PAID))
