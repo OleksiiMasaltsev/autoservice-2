@@ -40,7 +40,7 @@ public class OrderingServiceImpl implements OrderingService {
 
     @Override
     public BigDecimal calculatePrice(Long id) {
-        Ordering ordering = getById(id);
+        Ordering ordering = orderingRepository.getFetchedById(id);
 
         BigDecimal productsTotalPrice = ordering.getProducts().stream()
                 .map(Product::getPrice)

@@ -46,7 +46,7 @@ public class OrderingController {
     }
 
     @PostMapping("/product")
-    @Operation(summary = "add product to a ordering")
+    @Operation(summary = "add product to an ordering")
     public OrderingResponseDto addProduct(@RequestParam Long productId,
                                           @RequestParam Long orderingId) {
         Product product = productService.getById(productId);
@@ -64,7 +64,7 @@ public class OrderingController {
         return orderingMapper.mapToDto(orderingService.save(ordering));
     }
 
-    @PutMapping("/status")
+    @PutMapping
     @Operation(summary = "update status of an ordering")
     public OrderingResponseDto updateOrderingStatus(@RequestParam String status,
                                                     @RequestParam Long id) {

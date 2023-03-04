@@ -34,9 +34,10 @@ public class Ordering {
     private LocalDateTime receivingTime;
     @Column(name = "completion_time")
     private LocalDateTime completionTime;
-    @OneToMany(mappedBy = "ordering")
+    @OneToMany(fetch = FetchType.LAZY,
+            mappedBy = "ordering")
     private Set<Favor> favors;
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "ordering_id")
     private Set<Product> products;
     @Enumerated(EnumType.STRING)
