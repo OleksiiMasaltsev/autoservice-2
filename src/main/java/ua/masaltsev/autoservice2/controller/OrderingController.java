@@ -17,7 +17,6 @@ import ua.masaltsev.autoservice2.dto.request.OrderingRequestDto;
 import ua.masaltsev.autoservice2.dto.response.OrderingResponseDto;
 import ua.masaltsev.autoservice2.model.Ordering;
 import ua.masaltsev.autoservice2.model.Product;
-import ua.masaltsev.autoservice2.model.status.OrderingStatus;
 import ua.masaltsev.autoservice2.service.OrderingService;
 import ua.masaltsev.autoservice2.service.ProductService;
 
@@ -68,9 +67,7 @@ public class OrderingController {
     @Operation(summary = "update status of an ordering")
     public OrderingResponseDto updateOrderingStatus(@RequestParam String status,
                                                     @RequestParam Long id) {
-        Ordering ordering = orderingService.getById(id);
-        ordering.setStatus(OrderingStatus.valueOf(status.toUpperCase()));
-        return orderingMapper.mapToDto(orderingService.save(ordering));
+        return orderingMapper.mapToDto(orderingService.updateStatus(status, id));
     }
 
     @GetMapping("/{id}/price")

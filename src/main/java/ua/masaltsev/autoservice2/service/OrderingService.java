@@ -11,4 +11,6 @@ public interface OrderingService {
     void delete(Long id);
 
     BigDecimal calculatePrice(Long id);
+
+    Ordering updateStatus(String status, Long id);
 }

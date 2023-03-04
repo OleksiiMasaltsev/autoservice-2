@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import ua.masaltsev.autoservice2.model.Favor;
 import ua.masaltsev.autoservice2.model.Worker;
 import ua.masaltsev.autoservice2.model.status.FavorStatus;
+import ua.masaltsev.autoservice2.model.status.OrderingStatus;
 import ua.masaltsev.autoservice2.repository.FavorRepository;
 import ua.masaltsev.autoservice2.repository.WorkerRepository;
 import ua.masaltsev.autoservice2.service.WorkerService;
@@ -39,6 +40,7 @@ public class WorkerServiceImpl implements WorkerService {
     @Override
     public BigDecimal getSalary(Long id) {
         return workerRepository.getFetchedById(id).getOrderings().stream()
+                .filter(ordering -> ordering.getStatus() == OrderingStatus.COMPLETED_SUCCESSFULLY)
                 .flatMap(ordering -> ordering.getFavors().stream())
                 .filter(favor -> favor.getStatus().equals(FavorStatus.UNPAID))
                 .peek(favor -> favor.setStatus(FavorStatus.PAID))
