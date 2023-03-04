@@ -51,16 +51,11 @@ public class OrderingServiceImpl implements OrderingService {
                 .map(Favor::getPrice)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-        int count = ordering.getCar().getOwner().getOrderings().stream()
-                .filter(ord -> ord.getStatus() == OrderingStatus.PAID)
-                .toList()
-                .size();
+        int count = getNumberOfPaidOrderings(ordering);
 
-        BigDecimal productsDiscount = productsTotalPrice.divide(
-                        BigDecimal.valueOf(100), RoundingMode.HALF_UP)
+        BigDecimal productsDiscount = productsTotalPrice.divide(BigDecimal.valueOf(100))
                 .multiply(BigDecimal.valueOf(count * PRODUCT_DISCOUNT_PERCENTAGE));
-        BigDecimal favorDiscount = favorsTotalPrice.divide(
-                        BigDecimal.valueOf(100), RoundingMode.HALF_UP)
+        BigDecimal favorDiscount = favorsTotalPrice.divide(BigDecimal.valueOf(100))
                 .multiply(BigDecimal.valueOf(count * FAVOR_DISCOUNT_PERCENTAGE));
 
         BigDecimal price = productsTotalPrice.subtract(productsDiscount)
@@ -69,7 +64,7 @@ public class OrderingServiceImpl implements OrderingService {
         if (price.compareTo(BigDecimal.ZERO) == 0) {
             price = DIAG_PRICE;
         }
-
+        price = price.setScale(2, RoundingMode.HALF_UP);
         ordering.setPrice(price);
         save(ordering);
 
@@ -87,5 +82,12 @@ public class OrderingServiceImpl implements OrderingService {
         }
         ordering.setStatus(OrderingStatus.valueOf(status.toUpperCase()));
         return save(ordering);
+    }
+
+    private int getNumberOfPaidOrderings(Ordering ordering) {
+        return ordering.getCar().getOwner().getOrderings().stream()
+                .filter(ord -> ord.getStatus() == OrderingStatus.PAID)
+                .toList()
+                .size();
     }
 }
