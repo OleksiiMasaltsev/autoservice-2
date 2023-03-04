@@ -2,6 +2,7 @@ package ua.masaltsev.autoservice2.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -25,7 +26,7 @@ public class Worker {
     @Column(name = "id", nullable = false)
     private Long id;
     private String name;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "workers_orderings",
             joinColumns = @JoinColumn(name = "worker_id"),
             inverseJoinColumns = @JoinColumn(name = "ordering_id"))

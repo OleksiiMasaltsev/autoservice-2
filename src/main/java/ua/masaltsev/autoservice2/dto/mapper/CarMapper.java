@@ -18,9 +18,9 @@ public class CarMapper implements RequestDtoMapper<CarRequestDto,
     @Override
     public Car mapToModel(CarRequestDto dto) {
         Car car = new Car();
-        car.setYear(dto.getYear());
-        car.setModel(dto.getModel());
         car.setBrand(dto.getBrand());
+        car.setModel(dto.getModel());
+        car.setYear(dto.getYear());
         car.setPlate(dto.getPlate());
         car.setOwner(ownerService.getById(dto.getOwnerId()));
         return car;
@@ -30,9 +30,9 @@ public class CarMapper implements RequestDtoMapper<CarRequestDto,
     public CarResponseDto mapToDto(Car car) {
         CarResponseDto dto = new CarResponseDto();
         dto.setId(car.getId());
-        dto.setYear(car.getYear());
-        dto.setModel(car.getModel());
         dto.setBrand(car.getBrand());
+        dto.setModel(car.getModel());
+        dto.setYear(car.getYear());
         dto.setPlate(car.getPlate());
         return dto;
     }

@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 import ua.masaltsev.autoservice2.dto.request.FavorRequestDto;
 import ua.masaltsev.autoservice2.dto.response.FavorResponseDto;
 import ua.masaltsev.autoservice2.model.Favor;
+import ua.masaltsev.autoservice2.model.status.FavorStatus;
 import ua.masaltsev.autoservice2.service.OrderingService;
 import ua.masaltsev.autoservice2.service.WorkerService;
 
@@ -21,9 +22,10 @@ public class FavorMapper implements RequestDtoMapper<FavorRequestDto, Favor>,
     @Override
     public Favor mapToModel(FavorRequestDto dto) {
         Favor favor = new Favor();
-        favor.setPrice(dto.getPrice());
         favor.setWorker(workerService.getById(dto.getWorkerId()));
         favor.setOrdering(orderingService.getById(dto.getOrderingId()));
+        favor.setPrice(dto.getPrice());
+        favor.setStatus(FavorStatus.valueOf(dto.getStatus().toString().toUpperCase()));
         return favor;
     }
 
@@ -32,8 +34,6 @@ public class FavorMapper implements RequestDtoMapper<FavorRequestDto, Favor>,
         FavorResponseDto dto = new FavorResponseDto();
         dto.setId(favor.getId());
         dto.setPrice(favor.getPrice());
-        dto.setWorkerId(favor.getWorker().getId());
-        dto.setOrderingId(favor.getOrdering().getId());
         dto.setStatus(favor.getStatus().toString());
         return dto;
     }

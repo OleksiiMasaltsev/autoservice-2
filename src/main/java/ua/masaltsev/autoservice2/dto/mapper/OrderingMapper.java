@@ -47,11 +47,11 @@ public class OrderingMapper implements RequestDtoMapper<OrderingRequestDto, Orde
     public OrderingResponseDto mapToDto(Ordering ordering) {
         OrderingResponseDto dto = new OrderingResponseDto();
         dto.setId(ordering.getId());
-        dto.setPrice(ordering.getPrice());
         dto.setDescription(ordering.getDescription());
         dto.setReceivingTime(ordering.getReceivingTime());
         dto.setCompletionTime(ordering.getCompletionTime());
         dto.setStatus(ordering.getStatus().toString());
+        dto.setPrice(ordering.getPrice());
         return dto;
     }
 }
