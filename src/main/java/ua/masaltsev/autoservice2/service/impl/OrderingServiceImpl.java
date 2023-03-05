@@ -15,7 +15,7 @@ import ua.masaltsev.autoservice2.service.OrderingService;
 public class OrderingServiceImpl implements OrderingService {
     private static final BigDecimal FAVOR_DISCOUNT_PERCENTAGE = BigDecimal.valueOf(2);
     private static final BigDecimal PRODUCT_DISCOUNT_PERCENTAGE = BigDecimal.valueOf(1);
-    private static final BigDecimal DIAG_PRICE = BigDecimal.valueOf(500);
+    private static final BigDecimal DIAG_PRICE = BigDecimal.valueOf(20);
     private final OrderingRepository orderingRepository;
 
     public OrderingServiceImpl(OrderingRepository orderingRepository) {
