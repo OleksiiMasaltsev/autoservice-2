@@ -63,7 +63,7 @@ public class OrderingController {
         return orderingMapper.mapToDto(orderingService.save(ordering));
     }
 
-    @PutMapping
+    @PutMapping("/status")
     @Operation(summary = "update status of an ordering")
     public OrderingResponseDto updateOrderingStatus(@RequestParam String status,
                                                     @RequestParam Long id) {
