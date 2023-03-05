@@ -13,9 +13,9 @@ import ua.masaltsev.autoservice2.service.OrderingService;
 
 @Service
 public class OrderingServiceImpl implements OrderingService {
-    private static final float FAVOR_DISCOUNT_PERCENTAGE = 2.0f;
-    private static final float PRODUCT_DISCOUNT_PERCENTAGE = 1.0f;
-    private static final BigDecimal DIAG_PRICE = BigDecimal.valueOf(500);
+    private static final BigDecimal FAVOR_DISCOUNT_PERCENTAGE = BigDecimal.valueOf(2);
+    private static final BigDecimal PRODUCT_DISCOUNT_PERCENTAGE = BigDecimal.valueOf(1);
+    private static final BigDecimal DIAG_PRICE = BigDecimal.valueOf(20);
     private final OrderingRepository orderingRepository;
 
     public OrderingServiceImpl(OrderingRepository orderingRepository) {
@@ -51,12 +51,12 @@ public class OrderingServiceImpl implements OrderingService {
                 .map(Favor::getPrice)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-        int count = getNumberOfPaidOrderings(ordering);
+        BigDecimal count = BigDecimal.valueOf(getNumberOfPaidOrderings(ordering));
 
         BigDecimal productsDiscount = productsTotalPrice.divide(BigDecimal.valueOf(100))
-                .multiply(BigDecimal.valueOf(count * PRODUCT_DISCOUNT_PERCENTAGE));
+                .multiply(count.multiply(PRODUCT_DISCOUNT_PERCENTAGE));
         BigDecimal favorDiscount = favorsTotalPrice.divide(BigDecimal.valueOf(100))
-                .multiply(BigDecimal.valueOf(count * FAVOR_DISCOUNT_PERCENTAGE));
+                .multiply(count.multiply(FAVOR_DISCOUNT_PERCENTAGE));
 
         BigDecimal price = productsTotalPrice.subtract(productsDiscount)
                 .add(favorsTotalPrice).subtract(favorDiscount);

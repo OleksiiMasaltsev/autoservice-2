@@ -1,6 +1,7 @@
 package ua.masaltsev.autoservice2.service.impl;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import org.springframework.stereotype.Service;
 import ua.masaltsev.autoservice2.model.Favor;
 import ua.masaltsev.autoservice2.model.Worker;
@@ -47,6 +48,7 @@ public class WorkerServiceImpl implements WorkerService {
                 .peek(favorRepository::save)
                 .map(Favor::getPrice)
                 .reduce(BigDecimal.ZERO, (bd1, bd2) -> bd1.add(
-                        bd2.multiply(BigDecimal.valueOf(SALARY_PERCENTAGE))));
+                        bd2.multiply(BigDecimal.valueOf(SALARY_PERCENTAGE))))
+                .setScale(2, RoundingMode.HALF_UP);
     }
 }

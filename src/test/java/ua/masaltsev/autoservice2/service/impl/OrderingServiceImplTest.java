@@ -1,6 +1,8 @@
 package ua.masaltsev.autoservice2.service.impl;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,15 +17,19 @@ import ua.masaltsev.autoservice2.repository.OrderingRepository;
 import ua.masaltsev.autoservice2.service.OrderingService;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 class OrderingServiceImplTest {
-
+    private static final long ID = 15L;
+    private static final double EXPECTED_VAL = 50.51;
+    private static final int DIAG_PRICE = 20;
     private OrderingService orderingService;
-
     private OrderingRepository orderingRepository;
 
     @BeforeEach
@@ -33,27 +39,65 @@ class OrderingServiceImplTest {
     }
 
     @Test
-    void calculatePrice() {
-        Owner owner = new Owner();
-        owner.setOrderings(getTestOrderings());
-        Car car = new Car();
-        car.setOwner(owner);
-        Ordering ordering = new Ordering();
-        ordering.setId(15L);
-        ordering.setCar(car);
-        ordering.setProducts(getTestProducts());
-        ordering.setFavors(getTestFavors());
-
+    void calculatePrice_orderingWithProductsAndFavors_correctPrice() {
+        Ordering ordering = getOrdering();
         when(orderingRepository.getFetchedById(anyLong())).thenReturn(ordering);
-
-        BigDecimal actual = orderingService.calculatePrice(15L);
-        BigDecimal expected = BigDecimal.valueOf(50.51);
-
+        BigDecimal actual = orderingService.calculatePrice(ID);
+        BigDecimal expected = BigDecimal.valueOf(EXPECTED_VAL);
         assertEquals(expected, actual);
         verify(orderingRepository).getFetchedById(anyLong());
     }
 
-    private Set<Favor> getTestFavors() {
+    @Test
+    void calculatePrice_orderingWithEmptyLists_takeAsDiag() {
+        Ordering ordering = getOrdering();
+        ordering.setProducts(Collections.emptySet());
+        ordering.setFavors(Collections.emptySet());
+        when(orderingRepository.getFetchedById(anyLong())).thenReturn(ordering);
+        BigDecimal actual = orderingService.calculatePrice(ID);
+        BigDecimal expected = BigDecimal.valueOf(DIAG_PRICE).setScale(2, RoundingMode.HALF_UP);
+        assertEquals(expected, actual);
+        verify(orderingRepository).getFetchedById(anyLong());
+    }
+
+    @Test
+    void updateStatus_completedStatus_completeDateChanges() {
+        Ordering ordering = getOrdering();
+        ordering.setStatus(OrderingStatus.COMPLETED_SUCCESSFULLY);
+        when(orderingRepository.getReferenceById(anyLong())).thenReturn(ordering);
+        when(orderingRepository.save(ordering)).thenReturn(ordering);
+        assertNotNull(orderingService.updateStatus(
+                OrderingStatus.COMPLETED_SUCCESSFULLY.toString(), ID).getCompletionTime());
+        verify(orderingRepository).getReferenceById(anyLong());
+        verify(orderingRepository).save(any(Ordering.class));
+    }
+
+    @Test
+    void updateStatus_notCompletedStatus_completeDateDoNotChanges() {
+        Ordering ordering = getOrdering();
+        ordering.setStatus(OrderingStatus.RECEIVED);
+        when(orderingRepository.getReferenceById(anyLong())).thenReturn(ordering);
+        when(orderingRepository.save(ordering)).thenReturn(ordering);
+        assertNull(orderingService.updateStatus(
+                OrderingStatus.PROCEEDING.toString(), ID).getCompletionTime());
+        verify(orderingRepository).getReferenceById(anyLong());
+        verify(orderingRepository).save(any(Ordering.class));
+    }
+
+    private Ordering getOrdering() {
+        Ordering ordering = new Ordering();
+        Owner owner = new Owner();
+        Car car = new Car();
+        owner.setOrderings(getOrderingList());
+        car.setOwner(owner);
+        ordering.setId(ID);
+        ordering.setCar(car);
+        ordering.setProducts(getProductList());
+        ordering.setFavors(getFavorList());
+        return ordering;
+    }
+
+    private Set<Favor> getFavorList() {
         Favor favor1 = new Favor();
         favor1.setPrice(BigDecimal.valueOf(12));
         Favor favor2 = new Favor();
@@ -61,7 +105,7 @@ class OrderingServiceImplTest {
         return Set.of(favor1, favor2);
     }
 
-    private Set<Product> getTestProducts() {
+    private Set<Product> getProductList() {
         Product product1 = new Product();
         product1.setPrice(BigDecimal.valueOf(15));
         Product product2 = new Product();
@@ -69,7 +113,7 @@ class OrderingServiceImplTest {
         return Set.of(product1, product2);
     }
 
-    private List<Ordering> getTestOrderings() {
+    private List<Ordering> getOrderingList() {
         Ordering ordering1 = new Ordering();
         ordering1.setStatus(OrderingStatus.PAID);
         Ordering ordering2 = new Ordering();
@@ -79,9 +123,5 @@ class OrderingServiceImplTest {
         Ordering ordering4 = new Ordering();
         ordering4.setStatus(OrderingStatus.PAID);
         return List.of(ordering1, ordering2, ordering3, ordering4);
-    }
-
-    @Test
-    void updateStatus() {
     }
 }
