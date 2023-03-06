@@ -5,7 +5,7 @@
 #### Functionality:
 - creating and storing new entities - cars, owners, workers, favors, etc...
 - updating any data any changing statuses
-- calculating cost of ordering
+- calculating costs of orderings
 - calculating salary of workers
 
 #### Structure of the project:
@@ -18,6 +18,7 @@
 - Java 17
 - Postgres
 - Hibernate
+- Liquibase
 - Lombok
 - Maven
 - JUnit
@@ -25,7 +26,7 @@
 
 #### Instructions:
 - download the project
-- install postgreSQL or use Docker image to run it
+- install PostgreSQL or use Docker image to run it
 - configure [application.properties](src/main/resources/application.properties) to match your db username and password
 - run [main method](src/main/java/ua/masaltsev/autoservice2/Autoservice2Application.java)
 - open [swagger UI](http://localhost:8080/swagger-ui/index.html#/) to communicate with an API
