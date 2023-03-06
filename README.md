@@ -19,6 +19,7 @@
 - Postgres
 - Hibernate
 - Liquibase
+- Docker
 - Lombok
 - Maven
 - JUnit
@@ -26,10 +27,10 @@
 
 #### Instructions:
 - download the project
-- install PostgreSQL or use Docker image to run it
-- configure [application.properties](src/main/resources/application.properties) to match your db username and password
-- run [main method](src/main/java/ua/masaltsev/autoservice2/Autoservice2Application.java)
-- open [swagger UI](http://localhost:8080/swagger-ui/index.html#/) to communicate with an API
+- install and/or run Docker desktop
+- run in project folder using terminal: `mvn clean package -DskipTests`
+- run: `docker-compose up`
+- open [swagger UI](http://localhost:6868/swagger-ui/index.html#/) to communicate with an API
 
 #### List of available end-points:
 
