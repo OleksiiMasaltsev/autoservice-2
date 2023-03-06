@@ -1,0 +1,39 @@
+databaseChangeLog:
+  - include:
+      file: /db/changelog/changes/create-car-seq.sql
+  - include:
+      file: /db/changelog/changes/create-favor-seq.sql
+  - include:
+      file: /db/changelog/changes/create-owner-seq.sql
+  - include:
+      file: /db/changelog/changes/create-product-seq.sql
+  - include:
+      file: /db/changelog/changes/create-worker-seq.sql
+
+
+  - include:
+      file: /db/changelog/changes/create-cars-table.sql
+  - include:
+      file: /db/changelog/changes/create-favors-table.sql
+  - include:
+      file: /db/changelog/changes/create-orderings-table.sql
+  - include:
+      file: /db/changelog/changes/create-owners-table.sql
+  - include:
+      file: /db/changelog/changes/create-products-table.sql
+  - include:
+      file: /db/changelog/changes/create-workers-table.sql
+  - include:
+      file: /db/changelog/changes/create-workers_orderings-table.sql
+
+
+  - include:
+      file: /db/changelog/changes/alter-cars-table.sql
+  - include:
+      file: /db/changelog/changes/alter-favors-table.sql
+  - include:
+      file: /db/changelog/changes/alter-orderings-table.sql
+  - include:
+      file: /db/changelog/changes/alter-products-table.sql
+  - include:
+      file: /db/changelog/changes/alter-workers_orderings-table.sql
