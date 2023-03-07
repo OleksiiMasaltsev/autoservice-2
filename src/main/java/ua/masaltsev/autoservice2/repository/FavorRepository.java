@@ -10,6 +10,6 @@ public interface FavorRepository extends JpaRepository<Favor, Long> {
     @Override
     @Query("from Favor f "
             + "left join fetch f.ordering "
-            + "where f.id = ?1")
+            + "where f.id = :id")
     Favor getReferenceById(Long id);
 }

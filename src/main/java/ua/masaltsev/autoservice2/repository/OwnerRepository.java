@@ -10,6 +10,6 @@ public interface OwnerRepository extends JpaRepository<Owner, Long> {
     @Override
     @Query("from Owner o "
             + "left join fetch o.orderings "
-            + "where o.id = ?1")
+            + "where o.id = :id")
     Owner getReferenceById(Long id);
 }

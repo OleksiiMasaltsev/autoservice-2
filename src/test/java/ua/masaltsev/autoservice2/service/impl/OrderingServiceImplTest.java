@@ -98,30 +98,30 @@ class OrderingServiceImplTest {
     }
 
     private Set<Favor> getFavorList() {
-        Favor favor1 = new Favor();
-        favor1.setPrice(BigDecimal.valueOf(12));
-        Favor favor2 = new Favor();
-        favor2.setPrice(BigDecimal.valueOf(18));
-        return Set.of(favor1, favor2);
+        Favor cheapFavor = new Favor();
+        cheapFavor.setPrice(BigDecimal.valueOf(12));
+        Favor expensiveFavor = new Favor();
+        expensiveFavor.setPrice(BigDecimal.valueOf(18));
+        return Set.of(cheapFavor, expensiveFavor);
     }
 
     private Set<Product> getProductList() {
-        Product product1 = new Product();
-        product1.setPrice(BigDecimal.valueOf(15));
-        Product product2 = new Product();
-        product2.setPrice(BigDecimal.valueOf(8));
-        return Set.of(product1, product2);
+        Product expensiveProduct = new Product();
+        expensiveProduct.setPrice(BigDecimal.valueOf(15));
+        Product cheapProduct = new Product();
+        cheapProduct.setPrice(BigDecimal.valueOf(8));
+        return Set.of(expensiveProduct, cheapProduct);
     }
 
     private List<Ordering> getOrderingList() {
-        Ordering ordering1 = new Ordering();
-        ordering1.setStatus(OrderingStatus.PAID);
-        Ordering ordering2 = new Ordering();
-        ordering2.setStatus(OrderingStatus.PAID);
-        Ordering ordering3 = new Ordering();
-        ordering3.setStatus(OrderingStatus.COMPLETED_UNSUCCESSFULLY);
-        Ordering ordering4 = new Ordering();
-        ordering4.setStatus(OrderingStatus.PAID);
-        return List.of(ordering1, ordering2, ordering3, ordering4);
+        Ordering paidOrderingA = new Ordering();
+        paidOrderingA.setStatus(OrderingStatus.PAID);
+        Ordering paidOrderingB = new Ordering();
+        paidOrderingB.setStatus(OrderingStatus.PAID);
+        Ordering completedOrdering = new Ordering();
+        completedOrdering.setStatus(OrderingStatus.COMPLETED_UNSUCCESSFULLY);
+        Ordering paidOrderingC = new Ordering();
+        paidOrderingC.setStatus(OrderingStatus.PAID);
+        return List.of(paidOrderingA, paidOrderingB, completedOrdering, paidOrderingC);
     }
 }
