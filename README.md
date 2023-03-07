@@ -16,14 +16,15 @@
 #### Technologies used in the project:
 - Spring Boot 3
 - Java 17
-- Postgres
-- Hibernate
-- Liquibase
+- Postgres 15.1
+- Hibernate 6.1.6
+- Liquibase 4.19.1
+- Swagger 4.15.5
 - Docker
 - Lombok
 - Maven
-- JUnit
-- Mockito
+- JUnit 5.9.2
+- Mockito 4.8.1
 
 #### Instructions:
 - download the project
