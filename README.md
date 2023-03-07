@@ -1,19 +1,32 @@
-# autoservice
+# Auto-service
 
-**This is a RESTful app built using Spring Boot. It can process orders and favours of a car owner**
+This project is a RESTful application built using Spring Boot
+that allows car owners to process orders and favors. It
+provides functionality for creating and storing new entities
+such as cars, owners, workers, and favors. Additionally,
+users can update any data and change statuses, calculate the costs of orders,
+and determine the salary of workers.
+
+The project follows a standard structure of a Spring Boot project,
+with a Repository layer that communicates with the
+database, a Service layer that provides the business logic,
+and Controllers that accept requests and send responses.
 
 #### Functionality:
+
 - creating and storing new entities - cars, owners, workers, favors, etc...
 - updating any data any changing statuses
 - calculating costs of orderings
 - calculating salary of workers
 
 #### Structure of the project:
+
 - Repository layer - persistence layer that communicates with DB
 - Service layer - business logic
 - Controllers - accept requests and send responses
 
 #### Technologies used in the project:
+
 - Spring Boot 3
 - Java 17
 - Postgres 15.1
@@ -27,6 +40,7 @@
 - Mockito 4.8.1
 
 #### Instructions:
+
 - download the project
 - install and/or run Docker desktop
 - run in project folder using terminal: `mvn clean package -DskipTests`
