@@ -11,7 +11,7 @@ public interface OrderingRepository extends JpaRepository<Ordering, Long> {
     @Query("from Ordering ord "
             + "left join fetch ord.car "
             + "left join fetch ord.products "
-            + "where ord.id = ?1")
+            + "where ord.id = :id")
     Ordering getReferenceById(Long id);
 
     @Query("from Ordering ord "
@@ -20,6 +20,6 @@ public interface OrderingRepository extends JpaRepository<Ordering, Long> {
             + "left join fetch ord.car c "
             + "left join fetch c.owner o "
             + "left join fetch o.orderings "
-            + "where ord.id = ?1")
+            + "where ord.id = :id")
     Ordering getFetchedById(Long id);
 }

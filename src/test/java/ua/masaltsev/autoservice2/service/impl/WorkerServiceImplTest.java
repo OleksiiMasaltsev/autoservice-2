@@ -72,37 +72,37 @@ class WorkerServiceImplTest {
     }
 
     private Set<Favor> getFirstFavorList() {
-        Favor favor1 = new Favor();
-        favor1.setStatus(FavorStatus.UNPAID);
-        favor1.setPrice(BigDecimal.valueOf(12));
-        Favor favor2 = new Favor();
-        favor2.setStatus(FavorStatus.UNPAID);
-        favor2.setPrice(BigDecimal.valueOf(18));
-        return Set.of(favor1, favor2);
+        Favor cheapFavor = new Favor();
+        cheapFavor.setStatus(FavorStatus.UNPAID);
+        cheapFavor.setPrice(BigDecimal.valueOf(12));
+        Favor expensiveFavor = new Favor();
+        expensiveFavor.setStatus(FavorStatus.UNPAID);
+        expensiveFavor.setPrice(BigDecimal.valueOf(18));
+        return Set.of(cheapFavor, expensiveFavor);
     }
 
     private Set<Favor> getSecondFavorList() {
-        Favor favor1 = new Favor();
-        favor1.setStatus(FavorStatus.UNPAID);
-        favor1.setPrice(BigDecimal.valueOf(12));
-        Favor favor2 = new Favor();
-        favor2.setStatus(FavorStatus.PAID);
-        favor2.setPrice(BigDecimal.valueOf(18));
-        return Set.of(favor1, favor2);
+        Favor cheapFavor = new Favor();
+        cheapFavor.setStatus(FavorStatus.UNPAID);
+        cheapFavor.setPrice(BigDecimal.valueOf(12));
+        Favor expensiveFavor = new Favor();
+        expensiveFavor.setStatus(FavorStatus.PAID);
+        expensiveFavor.setPrice(BigDecimal.valueOf(18));
+        return Set.of(cheapFavor, expensiveFavor);
     }
 
     private Set<Ordering> getOrderingList() {
-        Ordering ordering1 = new Ordering();
-        ordering1.setStatus(OrderingStatus.COMPLETED_SUCCESSFULLY);
-        ordering1.setFavors(getFirstFavorList());
+        Ordering successfulOrderingA = new Ordering();
+        successfulOrderingA.setStatus(OrderingStatus.COMPLETED_SUCCESSFULLY);
+        successfulOrderingA.setFavors(getFirstFavorList());
 
-        Ordering ordering2 = new Ordering();
-        ordering2.setFavors(getSecondFavorList());
-        ordering2.setStatus(OrderingStatus.COMPLETED_SUCCESSFULLY);
+        Ordering successfulOrderingB = new Ordering();
+        successfulOrderingB.setFavors(getSecondFavorList());
+        successfulOrderingB.setStatus(OrderingStatus.COMPLETED_SUCCESSFULLY);
 
-        Ordering ordering3 = new Ordering();
-        ordering3.setStatus(OrderingStatus.COMPLETED_UNSUCCESSFULLY);
+        Ordering unsuccessfulOrdering = new Ordering();
+        unsuccessfulOrdering.setStatus(OrderingStatus.COMPLETED_UNSUCCESSFULLY);
 
-        return Set.of(ordering1, ordering2, ordering3);
+        return Set.of(successfulOrderingA, successfulOrderingB, unsuccessfulOrdering);
     }
 }
