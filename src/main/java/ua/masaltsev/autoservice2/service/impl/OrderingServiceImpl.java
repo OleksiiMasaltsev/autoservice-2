@@ -32,7 +32,9 @@ public class OrderingServiceImpl implements OrderingService {
 
     @Override
     public Ordering getById(Long id) {
-        return orderingRepository.getReferenceById(id);
+        return orderingRepository.findById(id).orElseThrow(
+                () -> new RuntimeException("Can't get an ordering with id: " + id)
+        );
     }
 
     @Override
@@ -42,7 +44,7 @@ public class OrderingServiceImpl implements OrderingService {
 
     @Override
     public BigDecimal calculatePrice(Long id) {
-        Ordering ordering = orderingRepository.getFetchedById(id);
+        Ordering ordering = getById(id);
 
         BigDecimal productsTotalPrice = ordering.getProducts().stream()
                 .map(Product::getPrice)
@@ -76,8 +78,8 @@ public class OrderingServiceImpl implements OrderingService {
         Ordering ordering = getById(id);
         if (status.toUpperCase().equals(
                 OrderingStatus.COMPLETED_SUCCESSFULLY.toString())
-                 || status.toUpperCase().equals(
-                         OrderingStatus.COMPLETED_UNSUCCESSFULLY.toString())) {
+                || status.toUpperCase().equals(
+                OrderingStatus.COMPLETED_UNSUCCESSFULLY.toString())) {
             ordering.setCompletionTime(LocalDateTime.now());
         }
         ordering.setStatus(OrderingStatus.valueOf(status.toUpperCase()));

@@ -20,7 +20,9 @@ public class OwnerServiceImpl implements OwnerService {
 
     @Override
     public Owner getById(Long id) {
-        return ownerRepository.getReferenceById(id);
+        return ownerRepository.findById(id).orElseThrow(
+                () -> new RuntimeException("Can't get an owner with id: " + id)
+        );
     }
 
     @Override

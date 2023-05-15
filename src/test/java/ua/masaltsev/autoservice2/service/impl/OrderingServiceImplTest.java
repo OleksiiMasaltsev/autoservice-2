@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -41,11 +42,11 @@ class OrderingServiceImplTest {
     @Test
     void calculatePrice_orderingWithProductsAndFavors_correctPrice() {
         Ordering ordering = getOrdering();
-        when(orderingRepository.getFetchedById(anyLong())).thenReturn(ordering);
+        when(orderingRepository.findById(anyLong())).thenReturn(Optional.of(ordering));
         BigDecimal actual = orderingService.calculatePrice(ID);
         BigDecimal expected = BigDecimal.valueOf(EXPECTED_VAL);
         assertEquals(expected, actual);
-        verify(orderingRepository).getFetchedById(anyLong());
+        verify(orderingRepository).findById(anyLong());
     }
 
     @Test
@@ -53,22 +54,22 @@ class OrderingServiceImplTest {
         Ordering ordering = getOrdering();
         ordering.setProducts(Collections.emptySet());
         ordering.setFavors(Collections.emptySet());
-        when(orderingRepository.getFetchedById(anyLong())).thenReturn(ordering);
+        when(orderingRepository.findById(anyLong())).thenReturn(Optional.of(ordering));
         BigDecimal actual = orderingService.calculatePrice(ID);
         BigDecimal expected = BigDecimal.valueOf(DIAG_PRICE).setScale(2, RoundingMode.HALF_UP);
         assertEquals(expected, actual);
-        verify(orderingRepository).getFetchedById(anyLong());
+        verify(orderingRepository).findById(anyLong());
     }
 
     @Test
     void updateStatus_completedStatus_completeDateChanges() {
         Ordering ordering = getOrdering();
         ordering.setStatus(OrderingStatus.COMPLETED_SUCCESSFULLY);
-        when(orderingRepository.getReferenceById(anyLong())).thenReturn(ordering);
+        when(orderingRepository.findById(anyLong())).thenReturn(Optional.of(ordering));
         when(orderingRepository.save(ordering)).thenReturn(ordering);
         assertNotNull(orderingService.updateStatus(
                 OrderingStatus.COMPLETED_SUCCESSFULLY.toString(), ID).getCompletionTime());
-        verify(orderingRepository).getReferenceById(anyLong());
+        verify(orderingRepository).findById(anyLong());
         verify(orderingRepository).save(any(Ordering.class));
     }
 
@@ -76,11 +77,11 @@ class OrderingServiceImplTest {
     void updateStatus_notCompletedStatus_completeDateDoNotChanges() {
         Ordering ordering = getOrdering();
         ordering.setStatus(OrderingStatus.RECEIVED);
-        when(orderingRepository.getReferenceById(anyLong())).thenReturn(ordering);
+        when(orderingRepository.findById(anyLong())).thenReturn(Optional.of(ordering));
         when(orderingRepository.save(ordering)).thenReturn(ordering);
         assertNull(orderingService.updateStatus(
                 OrderingStatus.PROCEEDING.toString(), ID).getCompletionTime());
-        verify(orderingRepository).getReferenceById(anyLong());
+        verify(orderingRepository).findById(anyLong());
         verify(orderingRepository).save(any(Ordering.class));
     }
 

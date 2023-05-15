@@ -2,6 +2,8 @@ package ua.masaltsev.autoservice2.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -14,6 +16,7 @@ import ua.masaltsev.autoservice2.dto.response.CarResponseDto;
 import ua.masaltsev.autoservice2.model.Car;
 import ua.masaltsev.autoservice2.service.CarService;
 
+@Slf4j
 @RestController
 @RequestMapping("/cars")
 @Tag(name = "Car controller")
@@ -30,6 +33,13 @@ public class CarController {
     @Operation(summary = "save new car")
     public CarResponseDto save(@RequestBody CarRequestDto requestDto) {
         return carMapper.mapToDto(carService.save(carMapper.mapToModel(requestDto)));
+    }
+
+    @GetMapping("/{id}")
+    @Operation(summary = "get a car by id")
+    public CarResponseDto getById(@PathVariable Long id) {
+        log.info("getting a car with id: {}", id);
+        return carMapper.mapToDto(carService.getById(id));
     }
 
     @PutMapping("/{id}")

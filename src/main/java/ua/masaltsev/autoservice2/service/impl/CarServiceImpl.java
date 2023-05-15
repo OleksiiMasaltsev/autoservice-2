@@ -19,12 +19,13 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public Car getById(Long id) {
-        return carRepository.getReferenceById(id);
+    public void deleteById(Long id) {
+        carRepository.deleteById(id);
     }
 
     @Override
-    public void deleteById(Long id) {
-        carRepository.deleteById(id);
+    public Car getById(Long id) {
+        return carRepository.findById(id).orElseThrow(
+                () -> new RuntimeException("Can't get a car with id: " + id));
     }
 }
