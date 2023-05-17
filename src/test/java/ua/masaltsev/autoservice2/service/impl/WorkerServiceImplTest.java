@@ -2,6 +2,7 @@ package ua.masaltsev.autoservice2.service.impl;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Optional;
 import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -42,14 +43,14 @@ class WorkerServiceImplTest {
         Set<Ordering> orderings = getOrderingList();
         Worker worker = new Worker();
         worker.setOrderings(orderings);
-        when(workerRepository.getFetchedById(anyLong())).thenReturn(worker);
+        when(workerRepository.findById(anyLong())).thenReturn(Optional.of(worker));
         when(favorRepository.save(any(Favor.class))).thenReturn(any(Favor.class));
 
         BigDecimal expected = BigDecimal.valueOf(EXPECTED_VAL).setScale(2, RoundingMode.HALF_UP);
         BigDecimal actual = workerService.getSalary(ID);
 
         assertEquals(expected, actual);
-        verify(workerRepository).getFetchedById(anyLong());
+        verify(workerRepository).findById(anyLong());
         verify(favorRepository, times(3)).save(any(Favor.class));
     }
 
@@ -60,14 +61,14 @@ class WorkerServiceImplTest {
                 .forEach(ordering -> ordering.setStatus(OrderingStatus.COMPLETED_UNSUCCESSFULLY));
         Worker worker = new Worker();
         worker.setOrderings(orderings);
-        when(workerRepository.getFetchedById(anyLong())).thenReturn(worker);
+        when(workerRepository.findById(anyLong())).thenReturn(Optional.of(worker));
         when(favorRepository.save(any(Favor.class))).thenReturn(any(Favor.class));
 
         BigDecimal expected = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP);
         BigDecimal actual = workerService.getSalary(ID);
 
         assertEquals(expected, actual);
-        verify(workerRepository).getFetchedById(anyLong());
+        verify(workerRepository).findById(anyLong());
         verify(favorRepository, never()).save(any(Favor.class));
     }
 

@@ -5,11 +5,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import ua.masaltsev.autoservice2.model.Owner;
 
+import java.util.Optional;
+
 @Repository
 public interface OwnerRepository extends JpaRepository<Owner, Long> {
-    @Override
-    @Query("from Owner o "
-            + "left join fetch o.orderings "
-            + "where o.id = :id")
-    Owner getReferenceById(Long id);
+//    @Query("from Owner o "
+//            + "left join fetch o.orderings "
+//            + "where o.id = :id")
+//    Optional<Owner> getOwnerById(Long id);
 }

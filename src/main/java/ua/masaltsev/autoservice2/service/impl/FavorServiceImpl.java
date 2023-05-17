@@ -24,7 +24,8 @@ public class FavorServiceImpl implements FavorService {
 
     @Override
     public Favor getById(Long id) {
-        return favorRepository.getReferenceById(id);
+        return favorRepository.findById(id).orElseThrow(
+                () -> new RuntimeException("Can't get a favor with id: " + id));
     }
 
     @Override
