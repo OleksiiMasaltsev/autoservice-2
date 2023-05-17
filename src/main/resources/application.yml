@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    hikari:
+      connection-timeout: '20000'
+      maximum-pool-size: '5'
+    url: 'jdbc:postgresql://localhost:5432/autoservice'
+    username: user
+    password: '1234'
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    open-in-view: false
+  liquibase:
+    enabled: true
