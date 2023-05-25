@@ -1,4 +1,4 @@
-package ua.masaltsev.autoservice2;
+package ua.masaltsev.autoservice2.initializer;
 
 import org.springframework.boot.test.util.TestPropertyValues;
 import org.springframework.context.ApplicationContextInitializer;

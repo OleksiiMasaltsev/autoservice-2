@@ -43,8 +43,9 @@ public class OwnerController {
         return ownerMapper.mapToDto(ownerService.save(ownerMapper.mapToModel(requestDto)));
     }
 
-    @PutMapping("/{id}")
     @Operation(summary = "update an owner")
+    @ResponseStatus(code = HttpStatus.OK)
+    @PutMapping("/{id}")
     public OwnerResponseDto update(@RequestBody OwnerRequestDto requestDto,
                                    @PathVariable Long id) {
         Owner owner = ownerMapper.mapToModel(requestDto);
