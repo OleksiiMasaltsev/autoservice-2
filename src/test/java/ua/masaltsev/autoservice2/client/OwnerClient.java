@@ -1,4 +1,4 @@
-package ua.masaltsev.autoservice2.owner;
+package ua.masaltsev.autoservice2.client;
 
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
@@ -9,21 +9,17 @@ import ua.masaltsev.autoservice2.dto.response.OwnerResponseDto;
 
 public class OwnerClient {
     public static ResponseEntity<OwnerResponseDto> save(TestRestTemplate template,
-                                                        Integer port,
+                                                        String rootUrl,
                                                         OwnerRequestDto requestDto) {
         HttpEntity<OwnerRequestDto> request = new HttpEntity<>(requestDto);
-        return template.exchange(getRootUrl(port) + "/owners", HttpMethod.POST, request, OwnerResponseDto.class);
+        return template.exchange(rootUrl + "/owners", HttpMethod.POST, request, OwnerResponseDto.class);
     }
 
     public static ResponseEntity<OwnerResponseDto> update(TestRestTemplate template,
-                                                          Integer port,
+                                                          String rootUrl,
                                                           OwnerRequestDto requestDto,
                                                           Long id) {
         HttpEntity<OwnerRequestDto> request = new HttpEntity<>(requestDto);
-        return template.exchange(getRootUrl(port) + "/owners" + "/" + id, HttpMethod.PUT, request, OwnerResponseDto.class);
-    }
-
-    private static String getRootUrl(Integer port) {
-        return String.format("http://localhost:%d", port);
+        return template.exchange(rootUrl + "/owners" + "/" + id, HttpMethod.PUT, request, OwnerResponseDto.class);
     }
 }
