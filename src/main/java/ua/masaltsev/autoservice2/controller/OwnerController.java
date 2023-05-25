@@ -3,12 +3,14 @@ package ua.masaltsev.autoservice2.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import ua.masaltsev.autoservice2.dto.mapper.OrderingMapper;
 import ua.masaltsev.autoservice2.dto.mapper.OwnerMapper;
@@ -34,8 +36,9 @@ public class OwnerController {
         this.orderingMapper = orderingMapper;
     }
 
-    @PostMapping
     @Operation(summary = "save new owner")
+    @ResponseStatus(code = HttpStatus.CREATED)
+    @PostMapping
     public OwnerResponseDto save(@RequestBody OwnerRequestDto requestDto) {
         return ownerMapper.mapToDto(ownerService.save(ownerMapper.mapToModel(requestDto)));
     }

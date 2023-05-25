@@ -8,7 +8,7 @@ import org.testcontainers.lifecycle.Startables;
 import org.testcontainers.utility.DockerImageName;
 
 public class TestcontainersInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
-    private static final PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(
+    static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(
             DockerImageName.parse("postgres:15.1"))
             .withDatabaseName("autoservice")
             .withUsername("user")
@@ -25,13 +25,5 @@ public class TestcontainersInitializer implements ApplicationContextInitializer<
                 "spring.datasource.username=" + postgres.getUsername(),
                 "spring.datasource.password=" + postgres.getPassword()
         ).applyTo(context.getEnvironment());
-    }
-
-    public static Integer getPort() {
-        return postgres.getFirstMappedPort();
-    }
-
-    public static String getHost() {
-        return postgres.getHost();
     }
 }

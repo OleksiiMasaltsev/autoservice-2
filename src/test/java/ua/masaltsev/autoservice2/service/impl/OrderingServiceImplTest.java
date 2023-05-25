@@ -29,7 +29,7 @@ import static org.mockito.Mockito.when;
 class OrderingServiceImplTest {
     private static final long ID = 15L;
     private static final double EXPECTED_VAL = 50.51;
-    private static final int DIAG_PRICE = 20;
+    private static final int DIAGNOSIS_PRICE = 20;
     private OrderingService orderingService;
     private OrderingRepository orderingRepository;
 
@@ -50,13 +50,13 @@ class OrderingServiceImplTest {
     }
 
     @Test
-    void calculatePrice_orderingWithEmptyLists_takeAsDiag() {
+    void calculatePrice_orderingWithEmptyLists_takeAsDiagnosis() {
         Ordering ordering = getOrdering();
         ordering.setProducts(Collections.emptySet());
         ordering.setFavors(Collections.emptySet());
         when(orderingRepository.findById(anyLong())).thenReturn(Optional.of(ordering));
         BigDecimal actual = orderingService.calculatePrice(ID);
-        BigDecimal expected = BigDecimal.valueOf(DIAG_PRICE).setScale(2, RoundingMode.HALF_UP);
+        BigDecimal expected = BigDecimal.valueOf(DIAGNOSIS_PRICE).setScale(2, RoundingMode.HALF_UP);
         assertEquals(expected, actual);
         verify(orderingRepository).findById(anyLong());
     }
