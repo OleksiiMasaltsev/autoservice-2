@@ -7,7 +7,7 @@ public enum OrderingStatus {
     COMPLETED_UNSUCCESSFULLY("Completed_unsuccessfully"),
     PAID("Paid");
 
-    public final String description;
+    private final String description;
 
     OrderingStatus(String description) {
         this.description = description;
