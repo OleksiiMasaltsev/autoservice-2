@@ -1,5 +1,6 @@
 package ua.masaltsev.autoservice2.service.impl;
 
+import java.util.List;
 import org.springframework.stereotype.Service;
 import ua.masaltsev.autoservice2.model.Owner;
 import ua.masaltsev.autoservice2.repository.OwnerRepository;
@@ -23,6 +24,11 @@ public class OwnerServiceImpl implements OwnerService {
         return ownerRepository.findById(id).orElseThrow(
                 () -> new RuntimeException("Can't get an owner with id: " + id)
         );
+    }
+
+    @Override
+    public List<Owner> getAll() {
+        return ownerRepository.findAll();
     }
 
     @Override

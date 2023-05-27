@@ -25,6 +25,7 @@ import ua.masaltsev.autoservice2.initializer.TestcontainersInitializer;
 import ua.masaltsev.autoservice2.model.status.OrderingStatus;
 import ua.masaltsev.autoservice2.client.OrderingClient;
 import ua.masaltsev.autoservice2.client.OwnerClient;
+import ua.masaltsev.autoservice2.scenario.OwnerScenario;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ContextConfiguration(initializers = TestcontainersInitializer.class)
@@ -39,37 +40,8 @@ class Autoservice2ApplicationIT {
     }
 
     @Test
-    void saveOwner_ok() {
-        OwnerRequestDto ownerRequestDto = new OwnerRequestDto();
-        ownerRequestDto.setName("Oleksii");
-        ownerRequestDto.setCarIds(Collections.emptyList());
-        ownerRequestDto.setOrderingIds(Collections.emptyList());
-        ResponseEntity<OwnerResponseDto> response =
-                OwnerClient.save(template, getRootUrl(), ownerRequestDto);
-
-        assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        assertNotNull(response.getBody());
-        assertEquals(ownerRequestDto.getName(), response.getBody().getName());
-    }
-
-    @Test
-    void updateOwner_ok() {
-        OwnerRequestDto ownerRequestDto = new OwnerRequestDto();
-        ownerRequestDto.setName("Oleksii");
-        ownerRequestDto.setCarIds(Collections.emptyList());
-        ownerRequestDto.setOrderingIds(Collections.emptyList());
-        ResponseEntity<OwnerResponseDto> creationResponse =
-                OwnerClient.save(template, getRootUrl(), ownerRequestDto);
-
-        assertNotNull(creationResponse.getBody());
-        Long id = creationResponse.getBody().getId();
-        ownerRequestDto.setName("Stepan");
-        ResponseEntity<OwnerResponseDto> updateResponse =
-                OwnerClient.update(template, getRootUrl(), ownerRequestDto, id);
-
-        assertEquals(HttpStatus.OK, updateResponse.getStatusCode());
-        assertNotNull(updateResponse.getBody());
-        assertEquals(ownerRequestDto.getName(), updateResponse.getBody().getName());
+    void ownerCrud_ok() {
+        OwnerScenario.ownerCrud(template, getRootUrl());
     }
 
     @Test
