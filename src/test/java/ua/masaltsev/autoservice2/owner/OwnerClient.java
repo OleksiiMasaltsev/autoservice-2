@@ -1,4 +1,4 @@
-package ua.masaltsev.autoservice2.client;
+package ua.masaltsev.autoservice2.owner;
 
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
@@ -15,7 +15,7 @@ public class OwnerClient {
                                                         String rootUrl,
                                                         OwnerRequestDto requestDto) {
         HttpEntity<OwnerRequestDto> request = new HttpEntity<>(requestDto);
-        return template.exchange(rootUrl + "/owners",
+        return template.exchange(rootUrl + OWNERS_ENDPOINT,
                 HttpMethod.POST, request, OwnerResponseDto.class);
     }
 
@@ -24,7 +24,7 @@ public class OwnerClient {
                                                           OwnerRequestDto requestDto,
                                                           Long id) {
         HttpEntity<OwnerRequestDto> request = new HttpEntity<>(requestDto);
-        return template.exchange(rootUrl + "/owners" + "/" + id,
+        return template.exchange(rootUrl + OWNERS_ENDPOINT + "/" + id,
                 HttpMethod.PUT, request, OwnerResponseDto.class);
     }
 
@@ -40,5 +40,12 @@ public class OwnerClient {
                                                               Long id) {
         return template.exchange(rootUrl + OWNERS_ENDPOINT + "/" + id,
                 HttpMethod.DELETE, null, OwnerResponseDto.class);
+    }
+
+    public static ResponseEntity<OwnerResponseDto[]> getOrderings(TestRestTemplate template,
+                                                                  String rootUrl,
+                                                                  Long id) {
+        return template.exchange(rootUrl + OWNERS_ENDPOINT + "/" + id + "/orderings",
+                HttpMethod.GET, null, OwnerResponseDto[].class);
     }
 }

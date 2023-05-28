@@ -14,7 +14,7 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ContextConfiguration;
-import ua.masaltsev.autoservice2.client.CarClient;
+import ua.masaltsev.autoservice2.car.CarClient;
 import ua.masaltsev.autoservice2.dto.request.CarRequestDto;
 import ua.masaltsev.autoservice2.dto.request.OrderingRequestDto;
 import ua.masaltsev.autoservice2.dto.request.OwnerRequestDto;
@@ -23,9 +23,9 @@ import ua.masaltsev.autoservice2.dto.response.OrderingResponseDto;
 import ua.masaltsev.autoservice2.dto.response.OwnerResponseDto;
 import ua.masaltsev.autoservice2.initializer.TestcontainersInitializer;
 import ua.masaltsev.autoservice2.model.status.OrderingStatus;
-import ua.masaltsev.autoservice2.client.OrderingClient;
-import ua.masaltsev.autoservice2.client.OwnerClient;
-import ua.masaltsev.autoservice2.scenario.OwnerScenario;
+import ua.masaltsev.autoservice2.ordering.OrderingClient;
+import ua.masaltsev.autoservice2.owner.OwnerClient;
+import ua.masaltsev.autoservice2.owner.OwnerScenario;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ContextConfiguration(initializers = TestcontainersInitializer.class)
@@ -42,6 +42,11 @@ class Autoservice2ApplicationIT {
     @Test
     void ownerCrud_ok() {
         OwnerScenario.ownerCrud(template, getRootUrl());
+    }
+
+    @Test
+    void getOrderingsByOwnerId_ok() {
+        OwnerScenario.getOrderings(template, getRootUrl());
     }
 
     @Test

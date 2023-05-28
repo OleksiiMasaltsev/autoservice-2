@@ -9,5 +9,5 @@ public class FavorRequestDto {
     private Long orderingId;
     private Long workerId;
     private BigDecimal price;
-    private FavorStatus status;
+    private String status;
 }

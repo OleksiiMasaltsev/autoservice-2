@@ -1,4 +1,4 @@
-package ua.masaltsev.autoservice2.client;
+package ua.masaltsev.autoservice2.car;
 
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
