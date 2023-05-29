@@ -161,7 +161,7 @@ public class OwnerScenario {
                 OwnerClient.update(template, rootUrl, ownerRequest, ownerResponse.getBody().getId());
         assertNotNull(updatedOwnerResponse.getBody());
 
-        ResponseEntity<OwnerResponseDto[]> ownerOrderingsResponse =
+        ResponseEntity<OrderingResponseDto[]> ownerOrderingsResponse =
                 OwnerClient.getOrderings(template, rootUrl, updatedOwnerResponse.getBody().getId());
         assertNotNull(ownerOrderingsResponse.getBody());
         assertEquals(1, ownerOrderingsResponse.getBody().length);

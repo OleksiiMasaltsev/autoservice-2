@@ -5,6 +5,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import ua.masaltsev.autoservice2.dto.request.OwnerRequestDto;
+import ua.masaltsev.autoservice2.dto.response.OrderingResponseDto;
 import ua.masaltsev.autoservice2.dto.response.OwnerResponseDto;
 
 public class OwnerClient {
@@ -42,10 +43,10 @@ public class OwnerClient {
                 HttpMethod.DELETE, null, OwnerResponseDto.class);
     }
 
-    public static ResponseEntity<OwnerResponseDto[]> getOrderings(TestRestTemplate template,
-                                                                  String rootUrl,
-                                                                  Long id) {
+    public static ResponseEntity<OrderingResponseDto[]> getOrderings(TestRestTemplate template,
+                                                                     String rootUrl,
+                                                                     Long id) {
         return template.exchange(rootUrl + OWNERS_ENDPOINT + "/" + id + "/orderings",
-                HttpMethod.GET, null, OwnerResponseDto[].class);
+                HttpMethod.GET, null, OrderingResponseDto[].class);
     }
 }
