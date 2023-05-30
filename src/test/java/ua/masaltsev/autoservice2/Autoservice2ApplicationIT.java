@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ContextConfiguration;
 import ua.masaltsev.autoservice2.car.CarClient;
+import ua.masaltsev.autoservice2.car.CarScenario;
 import ua.masaltsev.autoservice2.dto.request.CarRequestDto;
 import ua.masaltsev.autoservice2.dto.request.OrderingRequestDto;
 import ua.masaltsev.autoservice2.dto.request.OwnerRequestDto;
@@ -47,6 +48,11 @@ class Autoservice2ApplicationIT {
     @Test
     void getOrderingsByOwnerId_ok() {
         OwnerScenario.getOrderings(template, getRootUrl());
+    }
+
+    @Test
+    void carCrud_ok() {
+        CarScenario.carCrud(template, getRootUrl());
     }
 
     @Test
