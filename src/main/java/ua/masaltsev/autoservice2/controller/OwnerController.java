@@ -3,6 +3,7 @@ package ua.masaltsev.autoservice2.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +22,7 @@ import ua.masaltsev.autoservice2.dto.response.OwnerResponseDto;
 import ua.masaltsev.autoservice2.model.Owner;
 import ua.masaltsev.autoservice2.service.OwnerService;
 
+@Slf4j
 @RestController
 @RequestMapping("/owners")
 @Tag(name = "Owner controller")
@@ -39,6 +41,7 @@ public class OwnerController {
     @ResponseStatus(code = HttpStatus.CREATED)
     @PostMapping
     public OwnerResponseDto save(@RequestBody OwnerRequestDto requestDto) {
+        log.info("saving new owner: {}", requestDto);
         return ownerMapper.mapToDto(ownerService.save(ownerMapper.mapToModel(requestDto)));
     }
 
@@ -46,6 +49,7 @@ public class OwnerController {
     @ResponseStatus(code = HttpStatus.OK)
     @GetMapping
     public List<OwnerResponseDto> getAll() {
+        log.info("retrieving a list of all owners");
         return ownerService.getAll().stream()
                 .map(ownerMapper::mapToDto)
                 .toList();
@@ -55,6 +59,7 @@ public class OwnerController {
     @ResponseStatus(code = HttpStatus.OK)
     @GetMapping("/{id}")
     public OwnerResponseDto getById(@PathVariable Long id) {
+        log.info("retrieving an owner with id: {}", id);
         return ownerMapper.mapToDto(ownerService.getById(id));
     }
 
@@ -62,6 +67,7 @@ public class OwnerController {
     @ResponseStatus(code = HttpStatus.OK)
     @PutMapping("/{id}")
     public OwnerResponseDto update(@RequestBody OwnerRequestDto requestDto, @PathVariable Long id) {
+        log.info("updating the owner: {} with id: {}", requestDto, id);
         Owner owner = ownerMapper.mapToModel(requestDto);
         owner.setId(id);
         return ownerMapper.mapToDto(ownerService.save(owner));
@@ -71,6 +77,7 @@ public class OwnerController {
     @ResponseStatus(code = HttpStatus.OK)
     @GetMapping("/{id}/orderings")
     public List<OrderingResponseDto> getOrderings(@PathVariable Long id) {
+        log.info("retrieving all orderings of the owner with id: {}", id);
         return ownerService.getById(id).getOrderings().stream()
                 .map(orderingMapper::mapToDto)
                 .toList();
@@ -80,6 +87,7 @@ public class OwnerController {
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable Long id) {
+        log.info("deleting an owner with id: {},", id);
         ownerService.delete(id);
     }
 }

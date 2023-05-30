@@ -9,4 +9,5 @@ public class CarResponseDto {
     private String model;
     private Short year;
     private String plate;
+    private Long ownerId;
 }
