@@ -7,6 +7,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.NamedQueries;
+import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
@@ -16,6 +18,9 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "owners")
+@NamedQueries({
+        @NamedQuery(name = "Owner.findById", query = "select o from Owner o where o.id = :id")
+})
 @Getter
 @Setter
 public class Owner {

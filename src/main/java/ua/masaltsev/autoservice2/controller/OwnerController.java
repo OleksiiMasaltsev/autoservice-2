@@ -78,7 +78,7 @@ public class OwnerController {
     @GetMapping("/{id}/orderings")
     public List<OrderingResponseDto> getOrderings(@PathVariable Long id) {
         log.info("retrieving all orderings of the owner with id: {}", id);
-        return ownerService.getById(id).getOrderings().stream()
+        return ownerService.getOrderingsByOwnerId(id).stream()
                 .map(orderingMapper::mapToDto)
                 .toList();
     }
