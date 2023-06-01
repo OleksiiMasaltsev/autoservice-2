@@ -4,9 +4,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import org.springframework.stereotype.Service;
-import ua.masaltsev.autoservice2.model.Favor;
 import ua.masaltsev.autoservice2.model.Ordering;
-import ua.masaltsev.autoservice2.model.Product;
 import ua.masaltsev.autoservice2.model.status.OrderingStatus;
 import ua.masaltsev.autoservice2.repository.OrderingRepository;
 import ua.masaltsev.autoservice2.service.OrderingService;
@@ -15,7 +13,7 @@ import ua.masaltsev.autoservice2.service.OrderingService;
 public class OrderingServiceImpl implements OrderingService {
     private static final BigDecimal FAVOR_DISCOUNT_PERCENTAGE = BigDecimal.valueOf(2);
     private static final BigDecimal PRODUCT_DISCOUNT_PERCENTAGE = BigDecimal.valueOf(1);
-    private static final BigDecimal DIAG_PRICE = BigDecimal.valueOf(20);
+    private static final BigDecimal DIAGNOSTICS_PRICE = BigDecimal.valueOf(20);
     private final OrderingRepository orderingRepository;
 
     public OrderingServiceImpl(OrderingRepository orderingRepository) {
@@ -44,29 +42,23 @@ public class OrderingServiceImpl implements OrderingService {
 
     @Override
     public BigDecimal calculatePrice(Long id) {
-        Ordering ordering = getById(id);
+        BigDecimal productsPrice = orderingRepository.getProductsPrice(id);
+        BigDecimal favorsPrice = orderingRepository.getFavorsPrice(id);
+        Long count = orderingRepository.getNumberOfPaidOrderings(id);
 
-        BigDecimal productsTotalPrice = ordering.getProducts().stream()
-                .map(Product::getPrice)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-        BigDecimal favorsTotalPrice = ordering.getFavors().stream()
-                .map(Favor::getPrice)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        BigDecimal productsDiscount = productsPrice.divide(BigDecimal.valueOf(100))
+                .multiply(BigDecimal.valueOf(count).multiply(PRODUCT_DISCOUNT_PERCENTAGE));
+        BigDecimal favorDiscount = favorsPrice.divide(BigDecimal.valueOf(100))
+                .multiply(BigDecimal.valueOf(count).multiply(FAVOR_DISCOUNT_PERCENTAGE));
 
-        BigDecimal count = BigDecimal.valueOf(getNumberOfPaidOrderings(ordering));
-
-        BigDecimal productsDiscount = productsTotalPrice.divide(BigDecimal.valueOf(100))
-                .multiply(count.multiply(PRODUCT_DISCOUNT_PERCENTAGE));
-        BigDecimal favorDiscount = favorsTotalPrice.divide(BigDecimal.valueOf(100))
-                .multiply(count.multiply(FAVOR_DISCOUNT_PERCENTAGE));
-
-        BigDecimal price = productsTotalPrice.subtract(productsDiscount)
-                .add(favorsTotalPrice).subtract(favorDiscount);
+        BigDecimal price = productsPrice.subtract(productsDiscount)
+                .add(favorsPrice).subtract(favorDiscount);
 
         if (price.compareTo(BigDecimal.ZERO) == 0) {
-            price = DIAG_PRICE;
+            price = DIAGNOSTICS_PRICE;
         }
         price = price.setScale(2, RoundingMode.HALF_UP);
+        Ordering ordering = getById(id);
         ordering.setPrice(price);
         save(ordering);
 

@@ -9,8 +9,8 @@ import ua.masaltsev.autoservice2.model.Owner;
 
 @Repository
 public interface OwnerRepository extends JpaRepository<Owner, Long> {
-    @Query("select o.orderings " +
-            "from Owner o " +
-            "where o.id = :id")
+    @Query("select o.orderings "
+            + "from Owner o "
+            + "where o.id = :id")
     List<Ordering> getOrderingsByOwnerId(Long id);
 }
