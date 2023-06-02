@@ -48,16 +48,18 @@ public class OrderingController {
     }
 
     @Operation(summary = "add product to an ordering")
+    @ResponseStatus(HttpStatus.OK)
     @PostMapping("/product")
     public OrderingResponseDto addProduct(@RequestParam Long productId,
                                           @RequestParam Long orderingId) {
         Product product = productService.getById(productId);
-        Ordering ordering = orderingService.getById(orderingId);
+        Ordering ordering = orderingService.getFetchedById(orderingId);
         ordering.getProducts().add(product);
         return orderingMapper.mapToDto(orderingService.save(ordering));
     }
 
     @Operation(summary = "update an ordering")
+    @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{id}")
     public OrderingResponseDto update(@RequestBody OrderingRequestDto requestDto,
                                       @PathVariable Long id) {
@@ -67,6 +69,7 @@ public class OrderingController {
     }
 
     @Operation(summary = "update status of an ordering")
+    @ResponseStatus(HttpStatus.OK)
     @PutMapping("/status")
     public OrderingResponseDto updateOrderingStatus(@RequestParam String status,
                                                     @RequestParam Long id) {
@@ -74,6 +77,7 @@ public class OrderingController {
     }
 
     @Operation(summary = "calculate and get price of an ordering")
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{id}/price")
     public BigDecimal calculatePrice(@PathVariable Long id) {
         return orderingService.calculatePrice(id);

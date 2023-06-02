@@ -1,5 +1,6 @@
 package ua.masaltsev.autoservice2.ordering;
 
+import java.math.BigDecimal;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -26,5 +27,10 @@ public class OrderingClient {
         HttpEntity<OrderingRequestDto> request = new HttpEntity<>(requestDto);
         return template.exchange(rootUrl + ORDERINGS_ENDPOINT + "/" + id,
                 HttpMethod.PUT, request, OrderingResponseDto.class);
+    }
+
+    public static ResponseEntity<BigDecimal> calculatePrice(TestRestTemplate template, String rootUrl, Long id) {
+        return template.exchange(rootUrl + ORDERINGS_ENDPOINT + "/" + id + "/price",
+                HttpMethod.GET, null, BigDecimal.class);
     }
 }

@@ -36,13 +36,20 @@ public class WorkerServiceImpl implements WorkerService {
     }
 
     @Override
+    public Worker getFetchedById(Long id) {
+        return workerRepository.getFetchedById(id).orElseThrow(
+                () -> new RuntimeException("Can't get a worker with id: " + id)
+        );
+    }
+
+    @Override
     public void delete(Long id) {
         workerRepository.deleteById(id);
     }
 
     @Override
     public BigDecimal getSalary(Long id) {
-        return getById(id).getOrderings().stream()
+        return getFetchedById(id).getOrderings().stream()
                 .filter(ordering -> ordering.getStatus() == OrderingStatus.COMPLETED_SUCCESSFULLY)
                 .flatMap(ordering -> ordering.getFavors().stream())
                 .filter(favor -> favor.getStatus().equals(FavorStatus.UNPAID))

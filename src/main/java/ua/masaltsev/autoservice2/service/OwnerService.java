@@ -1,6 +1,7 @@
 package ua.masaltsev.autoservice2.service;
 
 import java.util.List;
+import ua.masaltsev.autoservice2.model.Ordering;
 import ua.masaltsev.autoservice2.model.Owner;
 
 public interface OwnerService {
@@ -11,4 +12,6 @@ public interface OwnerService {
     List<Owner> getAll();
 
     void delete(Long id);
+
+    List<Ordering> getOrderingsByOwnerId(Long id);
 }
