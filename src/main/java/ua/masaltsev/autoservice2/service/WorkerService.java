@@ -8,6 +8,8 @@ public interface WorkerService {
 
     Worker getById(Long id);
 
+    Worker getFetchedById(Long id);
+
     void delete(Long id);
 
     BigDecimal getSalary(Long id);

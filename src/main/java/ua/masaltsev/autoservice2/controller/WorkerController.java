@@ -53,7 +53,7 @@ public class WorkerController {
     @GetMapping("/{id}/orderings")
     @Operation(summary = "get a list of worker's orderings")
     public List<OrderingResponseDto> getOrderings(@PathVariable Long id) {
-        return workerService.getById(id).getOrderings().stream()
+        return workerService.getFetchedById(id).getOrderings().stream()
                 .map(orderingMapper::mapToDto)
                 .toList();
     }

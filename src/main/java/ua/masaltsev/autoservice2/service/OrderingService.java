@@ -8,6 +8,8 @@ public interface OrderingService {
 
     Ordering getById(Long id);
 
+    Ordering getFetchedById(Long id);
+
     void delete(Long id);
 
     BigDecimal calculatePrice(Long id);

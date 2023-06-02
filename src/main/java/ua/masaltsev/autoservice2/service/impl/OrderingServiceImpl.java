@@ -36,6 +36,13 @@ public class OrderingServiceImpl implements OrderingService {
     }
 
     @Override
+    public Ordering getFetchedById(Long id) {
+        return orderingRepository.getFetchedById(id).orElseThrow(
+                () -> new RuntimeException("Can't get an ordering with id: " + id)
+        );
+    }
+
+    @Override
     public void delete(Long id) {
         orderingRepository.deleteById(id);
     }
@@ -76,12 +83,5 @@ public class OrderingServiceImpl implements OrderingService {
         }
         ordering.setStatus(OrderingStatus.valueOf(status.toUpperCase()));
         return save(ordering);
-    }
-
-    private int getNumberOfPaidOrderings(Ordering ordering) {
-        return ordering.getCar().getOwner().getOrderings().stream()
-                .filter(ord -> ord.getStatus() == OrderingStatus.PAID)
-                .toList()
-                .size();
     }
 }

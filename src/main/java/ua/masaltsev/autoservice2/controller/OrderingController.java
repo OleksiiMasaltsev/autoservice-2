@@ -53,7 +53,7 @@ public class OrderingController {
     public OrderingResponseDto addProduct(@RequestParam Long productId,
                                           @RequestParam Long orderingId) {
         Product product = productService.getById(productId);
-        Ordering ordering = orderingService.getById(orderingId);
+        Ordering ordering = orderingService.getFetchedById(orderingId);
         ordering.getProducts().add(product);
         return orderingMapper.mapToDto(orderingService.save(ordering));
     }

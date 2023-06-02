@@ -10,6 +10,7 @@ import ua.masaltsev.autoservice2.car.CarScenario;
 import ua.masaltsev.autoservice2.initializer.TestcontainersInitializer;
 import ua.masaltsev.autoservice2.ordering.OrderingScenario;
 import ua.masaltsev.autoservice2.owner.OwnerScenario;
+import ua.masaltsev.autoservice2.worker.WorkerScenario;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ContextConfiguration(initializers = TestcontainersInitializer.class)
@@ -47,6 +48,11 @@ class Autoservice2ApplicationIT {
     @Test
     void calculateOrderingPrice_returnsCorrectValue() {
         OrderingScenario.calculatePrice(template, getRootUrl());
+    }
+
+    @Test
+    void calculateWorkersSalary_returnsCorrectValue() {
+        WorkerScenario.calculateWorkersSalary(template, getRootUrl());
     }
 
     private String getRootUrl() {

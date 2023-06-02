@@ -1,6 +1,7 @@
 package ua.masaltsev.autoservice2.repository;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -8,6 +9,9 @@ import ua.masaltsev.autoservice2.model.Ordering;
 
 @Repository
 public interface OrderingRepository extends JpaRepository<Ordering, Long> {
+    @Query("from Ordering o left join fetch o.products where o.id = :id")
+    Optional<Ordering> getFetchedById(Long id);
+
     @Query("select sum(pr.price) "
             + "from Ordering o "
             + "join o.products pr "
